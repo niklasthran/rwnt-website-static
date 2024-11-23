@@ -134,7 +134,8 @@ a:visited {
         margin: 0 0 calc(var(--space-h) * 2) 0;
     }
 
-    .project img {
+    .project img,
+    .project video {
         margin: 0;
         width: 100%;
         aspect-ratio: 1 / 1;
