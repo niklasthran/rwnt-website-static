@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<head>
+    <title>RWNT</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        head, body {
+            background-color: #fff;
+            color: #000;
+            padding: 0;
+            margin: 0;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        @font-face {
+            font-family: RiformaLight;
+            src: url(LLRiformaLight.otf);
+        }
+
+        div {
+            padding: 0;
+            margin: 0;
+        }
+
+        p {
+            padding: 0;
+            margin: 0;
+            font-family: RiformaLight;
+            font-size: 3em;
+            word-break: break-all;
+        }
+
+        a:link, a:visited {
+            color: #0000ff;
+            text-decoration: none;
+        }
+
+        a:hover, a:active {
+            color: #0000ff;
+            text-decoration: underline;
+        }
+
+        .frame-wrapper {
+            padding: 3.5em;
+        }
+
+        #bg-vid {
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+            position: absolute;
+
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            z-index: -1;
+        }
+
+        @media only screen and (max-width: 1000px) {
+            #bg-vid {
+                transform: rotate(90deg);
+                transform-origin: bottom left;
+                width: 100vh;
+                height: 100vw;
+                margin-top: -100vw;
+                object-fit: cover;
+            }
+
+            .frame-wrapper {
+                padding: 1.6em;
+            }
+
+            p {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <video id="bg-vid" autoplay playsinline muted loop>
+        <source src="220701_RingStand_Array_v1.mp4" type="video/mp4">
+      </video>
+
+    <div class="frame-wrapper">
+        <div>
+            <p><a target="_blank" rel="noopener noreferrer" href="https://robinwoern.com/">RW</a><a target="_blank" rel="noopener noreferrer" href="https://niklasthran.com/">NT</a></p>
+        </div>
+    </div>
+</body>

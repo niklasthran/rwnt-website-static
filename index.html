@@ -1,92 +1,121 @@
 <!DOCTYPE html>
+
 <head>
     <title>RWNT</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        head, body {
-            background-color: #fff;
-            color: #000;
-            padding: 0;
-            margin: 0;
-            width: 100vw;
-            height: 100vh;
-        }
-
-        @font-face {
-            font-family: RiformaLight;
-            src: url(LLRiformaLight.otf);
-        }
-
-        div {
-            padding: 0;
-            margin: 0;
-        }
-
-        p {
-            padding: 0;
-            margin: 0;
-            font-family: RiformaLight;
-            font-size: 3em;
-            word-break: break-all;
-        }
-
-        a:link, a:visited {
-            color: #0000ff;
-            text-decoration: none;
-        }
-
-        a:hover, a:active {
-            color: #0000ff;
-            text-decoration: underline;
-        }
-
-        .frame-wrapper {
-            padding: 3.5em;
-        }
-
-        #bg-vid {
-            width: 100vw;
-            height: 100vh;
-            object-fit: cover;
-            position: absolute;
-
-            left: 0;
-            right: 0;
-            top: 0;
-            bottom: 0;
-            z-index: -1;
-        }
-
-        @media only screen and (max-width: 1000px) {
-            #bg-vid {
-                transform: rotate(90deg);
-                transform-origin: bottom left;
-                width: 100vh;
-                height: 100vw;
-                margin-top: -100vw;
-                object-fit: cover;
-            }
-
-            .frame-wrapper {
-                padding: 1.6em;
-            }
-
-            p {
-                font-size: 2em;
-            }
-        }
-    </style>
+    <link rel= "stylesheet" type= "text/css" href="static/style.css">
 </head>
 
 <body>
-    <video id="bg-vid" autoplay playsinline muted loop>
-        <source src="220701_RingStand_Array_v1.mp4" type="video/mp4">
-      </video>
+    <div class="header">
+        <ul>
+            <li class="about"><b>RWNT</b> is a Berlin-based studio working at the intersections of art, design and science, founded by Robin Woern and Niklas Thran.</li>
+            <li class="email"><a href="mailto:duo.rwnt@gmail.com">duo.rwnt@gmail.com</a></li>
+            <li class="adress">Raumerstr. 9, 10437 Berlin</li>
+            <li class="imprint"><a href="#">Imprint + Data</a></li>
+        </ul>
+    </div>
 
-    <div class="frame-wrapper">
-        <div>
-            <p><a target="_blank" rel="noopener noreferrer" href="https://robinwoern.com/">RW</a><a target="_blank" rel="noopener noreferrer" href="https://niklasthran.com/">NT</a></p>
+    <div class="content">
+        
+        <div class="project">
+            
+                    
+            
+            <img src="./static/projects/p01_circular/img.jpg">
+            
+            <div class="meta">
+                <ul class="info">
+                    <li class="name"><b>Circular</b></li>
+                    <li class="keyword">Commission work</li>
+                    <li class="year">2023</li>
+                </ul>
+                <ul class="description">
+                    <li>Site-specific installation at Fraunhofer Institute for Interfacial Engineering and Biotechnology IGB Stuttgart. The work embodies a diverse and biobased economy (bioeconomy) by displaying different facets of scientific research in this field.</li>
+                </ul>
+            </div>
         </div>
+        
+        <div class="project">
+            
+                    
+            
+            <img src="./static/projects/p02_ion/img.png">
+            
+            <div class="meta">
+                <ul class="info">
+                    <li class="name"><b>Index of Noise</b></li>
+                    <li class="keyword">Research project</li>
+                    <li class="year">2019–Today</li>
+                </ul>
+                <ul class="description">
+                    <li>Ongoing artistic research project emerging from an eponymous work by Moritz Hundbiß and Robin Woern and Superposed Patterns by Niklas Thran.</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="project">
+            
+                    
+            
+            <img src="./static/projects/p03_pi/img.png">
+            
+            <div class="meta">
+                <ul class="info">
+                    <li class="name"><b>Pi</b></li>
+                    <li class="keyword">Artwork</li>
+                    <li class="year">2022</li>
+                </ul>
+                <ul class="description">
+                    <li>Kinetic sculpture based on the noise of randomly distributed digits of pi. The noise appears as a seemingly inexhaustible well of non-periodic elements, setting the objects in motion.</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="project">
+            
+            <video autoplay playsinline muted loop>
+                <source src="./static/projects/p04_tabula-rasa/video.mp4" type="video/mp4">
+            </video>
+            
+                    
+            
+            <div class="meta">
+                <ul class="info">
+                    <li class="name"><b>Tabula Rasa</b></li>
+                    <li class="keyword">Artwork</li>
+                    <li class="year">2021</li>
+                </ul>
+                <ul class="description">
+                    <li>Data-driven video installation. Inspired by the philosophical concept of the clean slate, it explores the technology of Deep Reinforcement Learning in machine learning.</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="project">
+            
+                    
+            
+            <img src="./static/projects/p05_rn-generator/img.png">
+            
+            <div class="meta">
+                <ul class="info">
+                    <li class="name"><b>RN-Generator with Serial Interface</b></li>
+                    <li class="keyword">Artwork</li>
+                    <li class="year">2020</li>
+                </ul>
+                <ul class="description">
+                    <li>Experimental device that deals with the generation of random numbers (RN) based on environmental influences for use in visual design and image generation.</li>
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+
+    <div class="footer">
+        <ul>
+            <li><a href="#">Imprint + Data</a></li>
+        </ul>
     </div>
 </body>

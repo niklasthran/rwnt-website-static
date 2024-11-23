@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+
+<head>
+    <title>RWNT</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel= "stylesheet" type= "text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <div class="header">
+        <ul>
+            <li class="about"><b>RWNT</b> is a Berlin-based studio working at the intersections of art, design and science, founded by Robin Woern and Niklas Thran.</li>
+            <li class="email"><a href="mailto:duo.rwnt@gmail.com">duo.rwnt@gmail.com</a></li>
+            <li class="adress">Raumerstr. 9, 10437 Berlin</li>
+            <li class="imprint"><a href="#">Imprint + Data</a></li>
+        </ul>
+    </div>
+
+    <div class="content">
+        {% for key in project_data %}
+        <div class="project">
+            {% for video in project_data[key]["videos"] %}
+            <video autoplay playsinline muted loop>
+                <source src="{{ video }}" type="video/mp4">
+            </video>
+            {% endfor %}
+                    
+            {% for image in project_data[key]["images"] %}
+            <img src="{{ image }}">
+            {% endfor %}
+            <div class="meta">
+                <ul class="info">
+                    <li class="name"><b>{{ project_data[key]["title"] }}</b></li>
+                    <li class="keyword">{{ project_data[key]["keyword"] }}</li>
+                    <li class="year">{{ project_data[key]["year"] }}</li>
+                </ul>
+                <ul class="description">
+                    <li>{{ project_data[key]["description"] }}</li>
+                </ul>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="footer">
+        <ul>
+            <li><a href="#">Imprint + Data</a></li>
+        </ul>
+    </div>
+</body>
