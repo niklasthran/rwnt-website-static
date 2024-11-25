@@ -128,6 +128,19 @@ a:visited {
     list-style: none;
 }
 
+@media (min-width: 1600px) {
+    body {
+        width: calc(1600px - var(--space-h));
+        margin: 0 auto 0 auto;
+    }
+
+    .project img,
+    .project video {
+        margin: 0;
+        width: 100%;
+    }
+}
+
 @media (max-width: 800px) {
     :root {
         --space-h: 16px;
