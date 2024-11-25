@@ -7,8 +7,16 @@
 @font-face {
     font-family: "Inter";
     src:
-      local("Inter"),
-      url("inter_otf/Inter-Regular.otf");
+        local("Inter") format("woff2"),
+        url("fonts/Inter-4.1/web/Inter-Regular.woff2");
+}
+
+@font-face {
+    font-family: "Inter";
+    src:
+        local("Inter") format("woff2"),
+        url("fonts/Inter-4.1/web/Inter-SemiBold.woff2");
+    font-weight: bold;
 }
 
 /*BASELINE + INDENT ADJUSTING*/
@@ -22,7 +30,6 @@ li {
     bottom: 0.21em;
     right: 0.08em;
 }*/
-  
 
 html {
     background-color: var(--bg-col);
