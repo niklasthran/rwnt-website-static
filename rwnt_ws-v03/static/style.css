@@ -128,9 +128,9 @@ a:visited {
     list-style: none;
 }
 
-@media (min-width: 1600px) {
+@media (min-width: 1500px) {
     body {
-        width: calc(1600px - var(--space-h));
+        width: calc(1500px - var(--space-h));
         margin: 0 auto 0 auto;
     }
 
