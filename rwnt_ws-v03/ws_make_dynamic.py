@@ -27,5 +27,9 @@ app = Flask(__name__)
 def index():
     return render_template("index.html", project_data=project_data)
 
+@app.route("/imprint_data.html")
+def imprint_data():
+    return render_template("imprint_data.html")
+
 if __name__ == "__main__":
     app.run(debug = True)
