@@ -1,52 +1,53 @@
 <!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>RWNT</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel= "stylesheet" type= "text/css" href="{{ url_for('static', filename='style.css') }}">
+    </head>
 
-<head>
-    <title>RWNT</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel= "stylesheet" type= "text/css" href="{{ url_for('static', filename='style.css') }}">
-</head>
+    <body>
+        <header>
+            <ul>
+                <li class="about"><b>RWNT</b> is a Berlin-based artist studio, founded by Robin Woern and Niklas Thran. Our work contributes to the intersections of art, design and science.</li>
+                <li class="email"><a href="mailto:studio@rwnt.de">studio@rwnt.de</a></li>
+                <li class="address">Raumerstr. 9, 10437 Berlin</li>
+                <li class="imprint"><a href="{{ url_for('imprint_data') }}">Imprint + Data</a></li>
+            </ul>
+        </header>
 
-<body>
-    <div class="header">
-        <ul>
-            <li class="about"><b>RWNT</b> is a Berlin-based artist studio, founded by Robin Woern and Niklas Thran. Our work contributes to the intersections of art, design and science.</li>
-            <li class="email"><a href="mailto:studio@rwnt.de">studio@rwnt.de</a></li>
-            <li class="adress">Raumerstr. 9, 10437 Berlin</li>
-            <li class="imprint"><a href="{{ url_for('imprint_data') }}">Imprint + Data</a></li>
-        </ul>
-    </div>
+        <footer>
+            <ul>
+                <li><a href="{{ url_for('imprint_data') }}">Imprint + Data</a></li>
+            </ul>
+        </footer>
 
-    <div class="content">
-        {% for key in project_data %}
-        <div class="project">
-            {% if project_data[key]["videos"] != [] %}
-            <video autoplay playsinline muted loop>
-                <source src="{{ project_data[key]['videos'][0] }}" type="video/mp4">
-            </video>
-            {% endif %}
-            
-            {% if project_data[key]["images"] != [] %}
-            <img src="{{ project_data[key]['images'][0] }}">
-            {% endif %}
+        <div class="content">
+            {% for key in project_data %}
+            <article>
+                {% if project_data[key]["videos"] != [] %}
+                <video autoplay playsinline muted loop>
+                    <source src="{{ project_data[key]['videos'][0] }}" type="video/mp4">
+                </video>
+                {% endif %}
+                
+                {% if project_data[key]["images"] != [] %}
+                <img src="{{ project_data[key]['images'][0] }}" alt="{{ project_data[key]['image-alt'] }}">
+                {% endif %}
 
-            <div class="info">
-                <ul class="meta">
-                    <li class="name"><b>{{ project_data[key]["title"] }}</b></li>
-                    <li class="keyword">{{ project_data[key]["keyword"] }}</li>
-                    <li class="year">{{ project_data[key]["year"] }}</li>
-                </ul>
-                <ul class="description">
-                    <li>{{ project_data[key]["description"] }}</li>
-                </ul>
-            </div>
+                <div class="info">
+                    <ul class="meta">
+                        <li class="name"><b>{{ project_data[key]["title"] }}</b></li>
+                        <li class="keyword">{{ project_data[key]["keyword"] }}</li>
+                        <li class="year">{{ project_data[key]["year"] }}</li>
+                    </ul>
+                    <ul class="description">
+                        <li>{{ project_data[key]["description"] }}</li>
+                    </ul>
+                </div>
+            </article>
+            {% endfor %}
         </div>
-        {% endfor %}
-    </div>
-
-    <div class="footer">
-        <ul>
-            <li><a href="{{ url_for('imprint_data') }}">Imprint + Data</a></li>
-        </ul>
-    </div>
-</body>
+    </body>
+</html>
