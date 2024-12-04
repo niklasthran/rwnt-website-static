@@ -47,7 +47,7 @@ html {
 }
 
 body {
-    margin: 0 var(--space-h) 0 var(--space-h);
+    margin: 0 calc(var(--space-h) / 2) 0 calc(var(--space-h) / 2);
     display: flex;
     column-count: 12;
     column-gap: calc(var(--space-h) / 2);
