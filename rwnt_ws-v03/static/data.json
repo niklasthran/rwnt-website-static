@@ -6,35 +6,28 @@
         "description": "Site-specific installation at Fraunhofer Institute for Interfacial Engineering and Biotechnology IGB Stuttgart. The work embodies a diverse and biobased economy (bioeconomy) by displaying different facets of scientific research in this field.",
         "image-alt": "A bright, gray installation made of metal and glass stands in a modern staircase. Several glass panels hang from thin steel cables in the installation. Brown, white and yellow bio-based materials are clamped into them."
     },
-    "p02_dika": {
-        "title": "Digitale Klasse Archive",
-        "year": "2024–Today",
-        "keyword": "Commission work in collaboration with Robert Schnüll",
-        "description": "Interactive Data Sculpture visualising the archive of the Digitale Klasse at Berlin University of the Arts (UdK). To be released in early 2025.",
-        "image-alt": "Picture of a laptop standing on a cluttered desk, showing a data visualisation on the screen."
-    },
-    "p03_pi": {
+    "p02_pi": {
         "title": "Pi",
         "year": "2022",
         "keyword": "Artwork",
         "description": "Kinetic sculpture based on the noise of randomly distributed digits of pi. The noise appears as a seemingly inexhaustible well of non-periodic elements, setting the objects in motion.",
         "image-alt": "An installation stands in a bright, minimalist room. The installation consists of 10 black steel rods and 10 black rings. The elements of the installation are strung together and form a closed row."
     },
-    "p04_ion": {
+    "p03_ion": {
         "title": "Index of Noise",
         "year": "2019–Today",
         "keyword": "Research project",
         "description": "Ongoing artistic research project emerging from an eponymous work by Moritz Hundbiß and Robin Woern and Superposed Patterns by Niklas Thran.",
         "image-alt": "A technical drawing shows a three-dimensional Bloch sphere. The sphere contains ellipses and labels for the probability distribution. The drawing is in black and white and scanned."
     },
-    "p05_tabula-rasa": {
+    "p04_tabula-rasa": {
         "title": "Tabula Rasa",
         "year": "2021",
         "keyword": "Artwork",
         "description": "Data-driven video installation. Inspired by the philosophical concept of the clean slate, it explores the technology of Deep Reinforcement Learning in machine learning.",
         "image-alt": "A video installation located in a large concrete room. It consists of a horizontal screen and shows a computer-generated, blue organism reminiscent of a cell."
     },
-    "p06_rn-generator": {
+    "p05_rn-generator": {
         "title": "RN-Generator with Serial Interface",
         "year": "2020",
         "keyword": "Artwork",
