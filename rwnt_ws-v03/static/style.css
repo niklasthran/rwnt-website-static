@@ -133,6 +133,11 @@ article video {
     max-width: 510px;
 }
 
+.logo img {
+    height: 1.4em;
+    margin: 0.2em 0 0.8em 0;
+}
+
 @media (min-width: 1500px) {
     body {
         width: calc(1500px - var(--space-h));
@@ -154,6 +159,11 @@ article video {
     html * {
         font-size: 13.667px !important;
         text-decoration-thickness: 1px !important;
+    }
+
+    .logo img {
+        height: 1.4em;
+        margin: 0.1em 0 0.9em 0;
     }
 }
 
@@ -177,7 +187,6 @@ article video {
     article video {
         margin: 0 0 var(--space-h) 0;
         width: 100%;
-        aspect-ratio: 1 / 1;
     }
 
     header {
@@ -247,6 +256,11 @@ article video {
     .info {
         max-width: 100%;
         max-width: 100%;
+    }
+
+    article img,
+    article video {
+        aspect-ratio: 1 / 1;
     }
     
     .year {
