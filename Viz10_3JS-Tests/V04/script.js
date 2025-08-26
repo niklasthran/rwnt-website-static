@@ -1,84 +1,83 @@
 import * as THREE from "three";
-import { OrbitControls } from '../three/examples/jsm/controls/OrbitControls.js';
 
 const container = document.querySelector("#container");
 
 const scene = new THREE.Scene();
 
 scene.background = new THREE.Color(0xF2F3F4);
-
 const ambient = new THREE.AmbientLight("white", 1.0);
 scene.add(ambient);
 
 /////////
-let geometry, n_geos, thick, dist;
+let geometry, n_geos;
+const thick = 1;
+const dist = 1;
 
 if (container.clientHeight > container.clientWidth) {
 	geometry = new THREE.BoxGeometry(30, thick, 30);
 	n_geos = 64;
-	thick = 1;
-	dist = 1;
 
 } else {
 	geometry = new THREE.BoxGeometry(30, 30, thick);
 	n_geos = 128;
-	thick = 1;
-	dist = 1;
+	
 }
 
+const cuboids = new THREE.InstancedMesh(
+	geometry,
+
+	new THREE.MeshPhysicalMaterial(
+		{
+			roughness: 0.7,   
+			transmission: 1.0,  
+			thickness: 6,
+			ior: 1.2,
+			transparent: true,
+			opacity: 0.79,
+			side: THREE.DoubleSide,
+			depthWrite: false
+		}
+	),
+
+	n_geos
+);
+
+const dummy = new THREE.Object3D();
 for (let i = 0; i < n_geos; i++){
-	const cuboid = new THREE.Mesh(
-		geometry,
-
-		new THREE.MeshPhysicalMaterial(
-			{
-				roughness: 0.7,   
-				transmission: 1.0,  
-				thickness: 6,
-				ior: 1.2,
-		
-				color: Math.random() * 0xffffff,
-
-				transparent: true,
-				opacity: 0.79,
-				side: THREE.DoubleSide,
-				depthWrite: false
-			}
-		)
-		
-	);
-	
 	if (container.clientHeight > container.clientWidth) {
-		cuboid.scale.set(
+		dummy.scale.set(
 			Math.random(10.0, 30.0),
 			thick,
 			Math.random(10.0, 30.0)
 		);
 		
-	
-		cuboid.position.set(
+		dummy.position.set(
 			0.0,
 			(- n_geos / 2 + (thick / 2)) * dist + i * dist, 
 			0.0
 		);
-
+	
 	} else {
-		cuboid.scale.set(
+		dummy.position.set(
+			0.0,
+			0.0, 
+			(- n_geos / 2 + (thick / 2)) * dist + i * dist
+		);
+	
+		dummy.scale.set(
 			Math.random(10.0, 30.0),
 			Math.random(10.0, 30.0),
 			thick
 		);
 		
-	
-		cuboid.position.set(
-			0.0,
-			0.0, 
-			(- n_geos / 2 + (thick / 2)) * dist + i * dist
-		);
 	}
 
-	scene.add(cuboid);
+	dummy.updateMatrix();
+	cuboids.setMatrixAt(i, dummy.matrix);
+	cuboids.setColorAt(i, new THREE.Color(Math.random() * 0xffffff))
 }
+
+scene.add(cuboids);
 /////////
 
 /////////
@@ -112,24 +111,13 @@ renderer.setSize(
 
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 renderer.render(scene, camera);
+/////////
 
+/////////
 container.appendChild(renderer.domElement);
 /////////
 
 /////////
-const gsize = 100;
-const divisions = 10;
-const gridHelper = new THREE.GridHelper( gsize, divisions );
-//scene.add( gridHelper );
-
-const axesHelper = new THREE.AxesHelper(50);
-//scene.add(axesHelper);
-
-const controls = new OrbitControls( camera, renderer.domElement );
-//controls.update();
-//controls.enableDamping = true;
-/////////
-
 let toggle_switch = false;
 if (container.clientHeight > container.clientWidth && toggle_switch == false) {
 	toggle_switch = true;
@@ -161,6 +149,8 @@ function onWindowResize() {
 }
 
 window.addEventListener("resize", onWindowResize);
+/////////
+
 
 /*
 function render(time) {
@@ -175,13 +165,4 @@ function render(time) {
 	requestAnimationFrame(render);
 }
 requestAnimationFrame(render);
-*/
-
-/*
-setTimeout(
-	function(){
-		window.location.reload(1);
-	},
-	1000
-);
 */

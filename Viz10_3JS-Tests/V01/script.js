@@ -46,7 +46,8 @@ for (let i = 0; i < n_geos; i++){
 
 				transparent: true,
 				opacity: 0.79,
-				side: THREE.DoubleSide
+				side: THREE.DoubleSide,
+				depthWrite: false
 			}
 		)
 		

@@ -1,5 +1,4 @@
 import * as THREE from "three";
-import { OrbitControls } from '../three/examples/jsm/controls/OrbitControls.js';
 
 const container = document.querySelector("#container");
 
@@ -10,76 +9,6 @@ scene.background = new THREE.Color(0xF2F3F4);
 const ambient = new THREE.AmbientLight("white", 1.0);
 scene.add(ambient);
 
-/////////
-let geometry, n_geos, thick, dist;
-
-if (container.clientHeight > container.clientWidth) {
-	geometry = new THREE.BoxGeometry(30, thick, 30);
-	n_geos = 64;
-	thick = 1;
-	dist = 1;
-
-} else {
-	geometry = new THREE.BoxGeometry(30, 30, thick);
-	n_geos = 128;
-	thick = 1;
-	dist = 1;
-}
-
-for (let i = 0; i < n_geos; i++){
-	const cuboid = new THREE.Mesh(
-		geometry,
-
-		new THREE.MeshPhysicalMaterial(
-			{
-				roughness: 0.7,   
-				transmission: 1.0,  
-				thickness: 6,
-				ior: 1.2,
-		
-				color: Math.random() * 0xffffff,
-
-				transparent: true,
-				opacity: 0.79,
-				side: THREE.DoubleSide,
-				depthWrite: false
-			}
-		)
-		
-	);
-	
-	if (container.clientHeight > container.clientWidth) {
-		cuboid.scale.set(
-			Math.random(10.0, 30.0),
-			thick,
-			Math.random(10.0, 30.0)
-		);
-		
-	
-		cuboid.position.set(
-			0.0,
-			(- n_geos / 2 + (thick / 2)) * dist + i * dist, 
-			0.0
-		);
-
-	} else {
-		cuboid.scale.set(
-			Math.random(10.0, 30.0),
-			Math.random(10.0, 30.0),
-			thick
-		);
-		
-	
-		cuboid.position.set(
-			0.0,
-			0.0, 
-			(- n_geos / 2 + (thick / 2)) * dist + i * dist
-		);
-	}
-
-	scene.add(cuboid);
-}
-/////////
 
 /////////
 const aspect = container.clientWidth / container.clientHeight;
@@ -110,26 +39,91 @@ renderer.setSize(
 	container.clientHeight
 );
 
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-renderer.render(scene, camera);
-
 container.appendChild(renderer.domElement);
 /////////
 
+
 /////////
-const gsize = 100;
-const divisions = 10;
-const gridHelper = new THREE.GridHelper( gsize, divisions );
-//scene.add( gridHelper );
+let geometry, thick, dist;
+const cuboids = [];
+let n_geos = 64
 
-const axesHelper = new THREE.AxesHelper(50);
-//scene.add(axesHelper);
+if (container.clientHeight > container.clientWidth) {
+	geometry = new THREE.BoxGeometry(30, thick, 30);
+	n_geos = n_geos / 2;
+	thick = 1;
+	dist = 1;
 
-const controls = new OrbitControls( camera, renderer.domElement );
-//controls.update();
-//controls.enableDamping = true;
+} else {
+	geometry = new THREE.BoxGeometry(30, 30, thick);
+	n_geos = n_geos;
+	thick = 1;
+	dist = 1;
+}
+
+for (let i = 0; i < n_geos; i++){
+	cuboids[i] = new THREE.Mesh(
+		geometry,
+
+		new THREE.MeshPhysicalMaterial(
+			{
+				roughness: 0.7,   
+				transmission: 1.0,  
+				thickness: 6,
+				ior: 1.2,
+		
+				color: Math.random() * 0xffffff,
+
+				transparent: true,
+				opacity: 0.79,
+				side: THREE.DoubleSide,
+				depthWrite: false
+			}
+		)
+		
+	);
+	
+	if (container.clientHeight > container.clientWidth) {
+		cuboids[i].scale.set(
+			Math.random(10.0, 30.0),
+			thick,
+			Math.random(10.0, 30.0)
+		);
+		
+	
+		cuboids[i].position.set(
+			0.0,
+			(- n_geos / 2 + (thick / 2)) * dist + i * dist, 
+			0.0
+		);
+
+	} else {
+		cuboids[i].scale.set(
+			Math.random(10.0, 30.0),
+			Math.random(10.0, 30.0),
+			thick
+		);
+		
+	
+		cuboids[i].position.set(
+			0.0,
+			0.0, 
+			(- n_geos / 2 + (thick / 2)) * dist + i * dist
+		);
+	}
+
+	scene.add(cuboids[i]);
+}
 /////////
 
+
+/////////
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.render(scene, camera);
+/////////
+
+
+/////////
 let toggle_switch = false;
 if (container.clientHeight > container.clientWidth && toggle_switch == false) {
 	toggle_switch = true;
@@ -161,21 +155,27 @@ function onWindowResize() {
 }
 
 window.addEventListener("resize", onWindowResize);
+/////////
 
-/*
+
+
 function render(time) {
-	time *= 0.001;
+	time *= 0.00001;
 
-	//cuboid.rotation.x = time;
-	//cuboid.rotation.y = time;
+	for (let i = 0; i < n_geos; i++){
+		if (container.clientHeight > container.clientWidth) {
+			cuboids[i].rotation.y = time * i * 0.1;
+		} else {
+			cuboids[i].rotation.z = time * i * 0.1;
+		}
+		
+	}
 
 	renderer.render(scene, camera);
-	//controls.update();
-
 	requestAnimationFrame(render);
 }
 requestAnimationFrame(render);
-*/
+
 
 /*
 setTimeout(
