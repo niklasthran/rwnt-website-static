@@ -1,0 +1,462 @@
+import * as THREE from "three";
+import * as D3 from "d3";
+
+
+////////////////////////////
+// Retrieve data from IDB
+
+function getData(key) {
+    return new Promise((resolve, reject) => {
+        const request = indexedDB.open("APST_DATA");
+
+		request.onupgradeneeded = () => {
+			const db = request.result;
+			const dataArray = db.createObjectStore("merge_group");
+			console.log("IDB updated.");
+		}
+
+        request.onsuccess = () => {
+            const db = request.result;
+            const tx = db.transaction("merge_group", "readonly");
+            const store = tx.objectStore("merge_group");
+            const getRequest = store.get(key);
+    
+            getRequest.onsuccess = () => resolve(getRequest.result);
+            getRequest.onerror = () => reject(getRequest.error);
+        };
+
+        request.onerror = () => reject(request.error);
+    });
+}
+
+const num_fsr 		= await getData('N_FSR')
+const num_opm 		= await getData('N_OPM')
+const num_nfl 		= await getData('N_NFL')
+const n_geos 		= await getData('N_TOTAL');
+const merge_group 	= await getData('DATA');
+////////////////////////////
+
+
+document.getElementById("num_fsr").innerHTML = num_fsr.toLocaleString();
+document.getElementById("num_opm").innerHTML = num_opm.toLocaleString();
+document.getElementById("num_nfl").innerHTML = num_nfl.toLocaleString();
+
+
+////////////////////////////
+/* DOM fetch */
+
+const container = document.querySelectorAll(".dataviz")[0];
+////////////////////////////
+
+
+////////////////////////////
+/* Scene and lights */
+
+const scene = new THREE.Scene();
+
+scene.background = new THREE.Color(0xF2F3F4);
+const ambient = new THREE.AmbientLight(0xFFFFFF, 1.0);
+scene.add(ambient);
+////////////////////////////
+
+
+////////////////////////////
+// Spiral algorithm
+
+function phyllotaxis(n, radius=1) {
+	const phi = Math.PI * (3 - Math.sqrt(5));
+	const points = [];
+  
+	for (let i = 0; i < n; i++) {
+	  const r = Math.sqrt(i / n) * radius;
+	  const theta = i * phi;
+	  points.push({
+		x: r * Math.cos(theta),
+		y: r * Math.sin(theta)
+	  });
+	}
+  
+	return points;
+}
+////////////////////////////
+
+
+////////////////////////////
+/* Geometry and Material */
+
+const geo_size 	= 5.0;
+
+const geometry 	= 	new THREE.BoxGeometry
+					(
+						geo_size,
+						geo_size,
+						geo_size
+					);
+
+const material 	= 	new THREE.MeshBasicMaterial
+					({
+						transparent: true,
+						opacity: 1.00,
+						side: THREE.DoubleSide,
+						depthWrite: false
+					});
+
+////////////////////////////				
+// Custom opacity attribute to be changed per instance
+const opacities = new Float32Array(n_geos);
+geometry.setAttribute("instanceOpacity", new THREE.InstancedBufferAttribute(opacities, 1));
+
+// MeshPhysicalMaterial shader modification
+material.onBeforeCompile = (shader) => {
+    shader.vertexShader = shader.vertexShader.replace(
+        "#include <common>",
+        `
+        #include <common>
+        attribute float instanceOpacity;
+        varying float vInstanceOpacity;
+        `
+    );
+
+    shader.vertexShader = shader.vertexShader.replace(
+        "#include <begin_vertex>",
+        `
+        #include <begin_vertex>
+        vInstanceOpacity = instanceOpacity;
+        `
+    );
+
+    shader.fragmentShader = shader.fragmentShader.replace(
+        "#include <common>",
+        `
+        #include <common>
+        varying float vInstanceOpacity;
+        `
+    );
+
+    // Apply per-instance opacity safely in the PhysicalMaterial pipeline
+    shader.fragmentShader = shader.fragmentShader.replace(
+        "#include <opaque_fragment>",
+        `
+        #include <opaque_fragment>
+        gl_FragColor.a *= vInstanceOpacity;
+        `
+    );
+};
+////////////////////////////
+
+const cuboids 	= 	new THREE.InstancedMesh
+					(
+						geometry,
+						material,
+						n_geos
+					);
+
+// Colors
+const cscaleA = D3.scaleLinear().domain([0, 4]).range(['#f4f4f4', '#2c9cd1']);
+const cscaleB = D3.scaleLinear().domain([0, 4]).range(['#f4f4f4', '#4f53c2']);
+
+const maxScore = D3.max(merge_group.flat(), d => d.nfl);
+const cscaleC = D3.scaleLinear().domain([0.0, maxScore]).range(['#dbd56e', '#dbd56e']);
+
+const cscaleD = D3.scaleLinear().domain([0, 4]).range(['#af80a6', '#af80a6']);
+
+
+////////////////////////////
+/* GFX Assembly */
+
+const spiral_coord = phyllotaxis(merge_group.length);
+
+// height + rad of container
+const H 			= 1 / 4;
+const R 			= 2000;
+
+const day 			= ((1000 * 60) * 60) * 24;
+const day_offset 	= 18700;
+
+// Counter reset
+let counter 		= 0;
+
+// 3D object for cuboid instance transformation
+const dummy = new THREE.Object3D();
+
+for (let i = 0; i < merge_group.length; i++) {
+
+	//let pX = 0;
+	//let pZ = 0;
+
+	//let pX = spiral_coord[i].x;
+	//let pZ = spiral_coord[i].y;
+
+	// starting at 3rd object in id array, cutting off earliest data
+	for (let j = 1; j < merge_group[i].length; j++) {
+
+		let date = Math.round(merge_group[i][j]["date"] / day) - day_offset;
+
+		let r = Math.sqrt(Math.random());
+		let theta = Math.random() * 2 * Math.PI;
+		
+		let pX = r * Math.cos(theta)
+		let pZ = r * Math.sin(theta)
+
+		for (const [key, value] of Object.entries(merge_group[i][j])) {
+
+			if (key.includes("fsr_mean")) {
+
+				dummy.position.x = pX * R;
+				dummy.position.y = date * H;
+				dummy.position.z = pZ * R;
+
+				dummy.scale.x = 1.0;
+				dummy.scale.y = 1.0;
+				dummy.scale.z = 1.0;
+
+				dummy.updateMatrix();
+				cuboids.setMatrixAt(counter, dummy.matrix);
+				
+				// change opacity for fsr
+				opacities[counter] = 1.0;
+
+				if (merge_group[i][j]["sod"] == "Digital self assessments_ALS App" ||
+					merge_group[i][j]["sod"] == "Digital self assessments_APST platform") {
+
+					cuboids.setColorAt
+					(
+						counter,
+						new THREE.Color
+						(
+							D3.color(cscaleB(merge_group[i][j][key])).formatHex()
+						)
+					);
+				} else {
+
+					cuboids.setColorAt
+					(
+						counter,
+						new THREE.Color
+						(
+							D3.color(cscaleA(merge_group[i][j][key])).formatHex()
+						)
+					);
+				}
+
+				counter++;
+			}
+
+			if (key.includes("opm")) {
+				dummy.position.x = pX * R - geo_size;
+				dummy.position.y = date * H;
+				dummy.position.z = pZ * R;
+
+				dummy.scale.x = 1.0;
+				dummy.scale.y = 1.0;
+				dummy.scale.z = 1.0;
+
+				dummy.updateMatrix();
+				cuboids.setMatrixAt(counter, dummy.matrix);
+
+				opacities[counter] = 1.0;
+
+				cuboids.setColorAt
+				(
+					counter,
+					new THREE.Color
+					(
+						D3.color(cscaleD(merge_group[i][j][key])).formatHex()
+					)
+				);
+
+				counter++;
+			}
+			
+			if (key.includes("nfl")) {
+				let nfl_val = merge_group[i][j]["nfl"] * 0.01;
+
+				dummy.position.x = pX * R + geo_size;
+				dummy.position.y = date * H + (nfl_val * geo_size * 0.5) - (geo_size * 0.5);
+
+				dummy.scale.y = nfl_val;
+				dummy.scale.x = 1.0;
+
+				dummy.updateMatrix();
+				cuboids.setMatrixAt(counter, dummy.matrix);
+
+				cuboids.setColorAt
+				(
+					counter,
+					new THREE.Color
+					(
+						D3.color(cscaleC(merge_group[i][j]["nfl"])).formatHex()
+					)
+				);
+
+				// change opacity for nfl
+				opacities[counter] = 1.0;
+
+				counter++;
+			}
+		}
+	}
+}
+
+console.log(counter);
+
+scene.add(cuboids);
+
+// Update custom geometry attribute
+geometry.attributes.instanceOpacity.needsUpdate = true;
+///////////////////////////
+
+
+///////////////////////////
+/* Camera */
+
+const aspect = container.clientWidth / container.clientHeight;
+
+/*
+let size = 100;
+const camera = new THREE.OrthographicCamera(
+	(size * aspect) / -2,
+	(size * aspect) / 2,
+	size / 2,
+	size / -2,
+	1,
+	10000
+);
+*/
+
+const camera = new THREE.PerspectiveCamera(75, aspect, 1, 100000);
+
+camera.position.set(0, 0, R * 1.15);
+camera.lookAt(0, 0, 0);
+scene.add(camera);
+
+const axesHelper = new THREE.AxesHelper(10);
+scene.add(axesHelper);
+////////////////////////////
+
+
+////////////////////////////
+/* Renderer */
+
+const renderer = new THREE.WebGLRenderer(
+	{
+		antialias: true
+	}
+);
+
+renderer.setSize(
+	container.clientWidth,
+	container.clientHeight
+);
+
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.render(scene, camera);
+////////////////////////////
+
+
+////////////////////////////
+/* DOM placement */
+
+container.appendChild(renderer.domElement);
+////////////////////////////
+
+
+////////////////////////////
+/* Window resizing and H/V-switching */
+
+function onWindowResize() {
+
+	const newAspect = container.clientWidth / container.clientHeight;
+
+	/*
+	camera.left = (size * newAspect) / -2;
+	camera.right = (size * newAspect) / 2;
+	*/
+
+	camera.aspect = newAspect;
+
+	camera.updateProjectionMatrix();
+
+	renderer.setSize(container.clientWidth, container.clientHeight);
+	renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+	renderer.render(scene, camera);
+
+}
+
+window.addEventListener("resize", onWindowResize);
+////////////////////////////
+
+
+////////////////////////////
+/* Opacity UI */
+
+function opacity_ctrl(o_fsr=1.0, o_opm=1.0, o_nfl=1.0) {
+	let counter = 0;
+
+	for (let i = 0; i < merge_group.length; i++) {
+		for (let j = 1; j < merge_group[i].length; j++) {
+			for (const [key, value] of Object.entries(merge_group[i][j])) {
+
+				if (key.includes("fsr_mean")) {
+					dummy.updateMatrix();
+					cuboids.setMatrixAt(counter, dummy.matrix);
+
+					opacities[counter] = o_fsr;
+					counter++;
+				}
+
+				if (key.includes("opm")) {
+					dummy.updateMatrix();
+					cuboids.setMatrixAt(counter, dummy.matrix);
+
+					opacities[counter] = o_opm;
+					counter++;
+				}
+				
+				if (key.includes("nfl")) {
+					dummy.updateMatrix();
+					cuboids.setMatrixAt(counter, dummy.matrix);
+
+					opacities[counter] = o_nfl;
+					counter++;
+				}
+			}
+		}
+	}
+
+	geometry.attributes.instanceOpacity.needsUpdate = true;
+}
+
+// Default values --> full opacity
+let A = 1.0;
+let B = 1.0;
+let C = 1.0;
+
+const cb_fsr = document.getElementById("cb_fsr");
+const cb_opm = document.getElementById("cb_opm");
+const cb_nfl = document.getElementById("cb_nfl");
+
+[cb_fsr, cb_opm, cb_nfl].forEach(cb => cb.addEventListener("change", updateValues));
+
+// when cb unchecked --> value to 0.1
+function updateValues() {
+    A = cb_fsr.checked ? 1.0 : 0.1;
+    B = cb_opm.checked ? 1.0 : 0.1;
+    C = cb_nfl.checked ? 1.0 : 0.1;
+
+    opacity_ctrl(A, B, C);
+}
+////////////////////////////
+
+
+////////////////////////////
+/* Animation */
+
+function animate() {
+    requestAnimationFrame(animate);
+
+    cuboids.rotation.y += 0.001;
+
+    renderer.render(scene, camera);
+}
+animate();

@@ -1,0 +1,89 @@
+@font-face {
+	font-family: Inter-ExtraLight;
+	src: url(../assets/Inter-ExtraLight.woff2);
+}
+
+@font-face {
+	font-family: Inter-Medium;
+	src: url(../assets/Inter-Medium.woff2);
+}
+
+html {
+	width: 100%;
+	height: 100%;
+}
+
+body {
+	width: 100%;
+	height: 100%;
+	margin: 0 auto 0 auto;
+
+	display: flex;
+	flex-direction: column;
+}
+
+.dataviz-wrap {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+}
+
+.dataviz {
+	width: 100%;
+	height: 490px;
+}
+
+canvas {
+	border-radius: 7.5px;
+}
+
+.dataviz-dash {
+	margin: 48px 76px 0 76px;
+	display: flex;
+	gap: 16px;
+}
+
+.dataviz-dash h2 {
+	font-family: Inter-Medium;
+	font-size: 14px;
+	line-height: 18px;
+	font-weight: normal;
+}
+
+.dataviz-dash ul {
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+}
+
+.dataviz-dash p {
+	font-family: Inter-ExtraLight;
+	font-size: 54px;
+	line-height: 58px;
+	margin: 0;
+}
+
+.dataviz-dash label {
+	font-family: Inter-Medium;
+	font-size: 14px;
+	line-height: 33px;
+	margin: 0;
+}
+
+#cb_fsr {
+	accent-color: #2c9cd1;
+}
+
+#cb_opm {
+	accent-color: #af80a6;
+}
+
+#cb_nfl {
+	accent-color: #dbd56e;
+}
+
+.dataviz-dash-box {
+	width: 100%;
+	border-top: 1.5px black solid;
+}
