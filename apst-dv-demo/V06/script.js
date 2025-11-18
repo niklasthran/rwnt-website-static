@@ -98,7 +98,7 @@ const material 	= 	new THREE.MeshBasicMaterial
 						transparent: true,
 						opacity: 1.00,
 						side: THREE.DoubleSide,
-						depthWrite: false
+						depthWrite: true
 					});
 
 ////////////////////////////				
