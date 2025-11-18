@@ -1,6 +1,8 @@
 import * as D3 from "d3";
 import * as XLSX from "xlsx";
 
+////////////////////////////
+/* PARSING FUNCTION */
 async function parse_xlsx(url_str, excl_row_n=0) {
 	const file_xlsx = await fetch(url_str);
 	const file_buffer = await file_xlsx.arrayBuffer();
@@ -15,7 +17,11 @@ async function parse_xlsx(url_str, excl_row_n=0) {
 
 	return XLSX.utils.sheet_to_json(file_sheet, {raw: false});
 }
+////////////////////////////
 
+
+////////////////////////////
+/* FORMAT FUNCTIONS */
 function format_date(date_str, delimiter){
 	if (date_str === undefined || date_str === "") {
 		return "";
@@ -75,11 +81,13 @@ function reduce_gender(gender_str) {
 		return "M";
 	}
 }
+////////////////////////////
 
 
 ////////////////////////////
 /* DATA IMPORT */
 
+// FRS
 let xlsx_url = "../assets/APST_ALS Data Repository_Date file 4_ALSFRS-R data_V2.8_20250929_open.xlsx";
 let ALSFRS_data = await parse_xlsx(xlsx_url);
 
@@ -126,6 +134,7 @@ for (let i = ALSFRS_data.length - 1; i >= 0; i--) {
 }
 
 
+// NfL
 xlsx_url = "../assets/APST_ALS Data Repository_Date file 5_Serum Neurofilament data_V2.4_20250929_open.xlsx";
 let NfL_data = await parse_xlsx(xlsx_url);
 
@@ -145,6 +154,7 @@ for (let i = NfL_data.length - 1; i >= 0; i--) {
 }
 
 
+// OPM
 xlsx_url = "../assets/APST_ALS Data Repository_Date file 1_Demographic and diagnosis data_V2.7_20250929_open.xlsx";
 let Demo_data = await parse_xlsx(xlsx_url, 1);
 
@@ -184,14 +194,7 @@ Pheno_data = Pheno_data.map((d) => {
 	};
 });
 
-/*
-TO DO:
-Simplify phenotype data type array to only those
-key that have a value of "true".
-if value == "false" ->	delete key
---> DONE, see below.
-*/
-
+// Delete all OPM keys that are empty (false)
 for (let i = 0; i < Pheno_data.length; i++) {
 	for (const key in Pheno_data[i]) {
 		if (Pheno_data[i][key] === false) {
@@ -200,12 +203,9 @@ for (let i = 0; i < Pheno_data.length; i++) {
 	}
 }
 
-/*
-if value == "true"	->	either just keep key as it is or
-						simplify key name to "fs"/"ts"/"sp" and
-						set value to phenotype name.
-*/
 
+// MERGER
+// Merging all data types
 const merge = [
 	...ALSFRS_data,
 	...NfL_data,
@@ -213,11 +213,19 @@ const merge = [
 	...Pheno_data
 ];
 
-
+// Group all data types bei ID
 let merge_group = Object.groupBy(merge, ({ id }) => id);
 merge_group = Object.entries(merge_group);
+////////////////////////////
+
+
+////////////////////////////
+/* SORTING */
+
+// Sort data set by ID
 merge_group = merge_group.sort();
 
+// Sort objects within IDs by date (old -> new)
 for(let i = 0; i < merge_group.length; i++){
 	merge_group[i] = merge_group[i].flat();
 	merge_group[i].sort(
@@ -231,16 +239,18 @@ for(let i = 0; i < merge_group.length; i++){
 	merge_group[i] = merge_date(merge_group[i]);
 }
 
-
+// Sort all IDs by number of objects within (length) (long -> short)
 merge_group.sort(
 	(a, b) => D3.descending(a.length, b.length)
 );
 
+// Sort all IDs by first date recorded (oldest -> youngest)
 //merge_group.sort((a, b) => a[1].date - b[1].date);
 
 
 ////////////////////////////
 /* Count all items and identifiers */
+
 let fsr_counter 		= 0;
 let fsr_mean_counter 	= 0;
 let opm_counter 		= 0;
@@ -257,10 +267,13 @@ for (let n = 0; n < merge_group.length; n++){
 	}
 }
 
+// sum total number (minus fsr items)
 const total_counter = fsr_mean_counter + opm_counter + nfl_counter
 
 //console.log(merge_group);
 console.log(total_counter);
+////////////////////////////
+
 
 ////////////////////////////
 /* STORE IN IDB */

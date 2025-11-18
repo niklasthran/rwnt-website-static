@@ -17,9 +17,18 @@ body {
 	width: 100%;
 	height: 100%;
 	margin: 0 auto 0 auto;
+}
 
+.header {
+	margin: 0 76px 0 76px;
+	height: 124px;
 	display: flex;
-	flex-direction: column;
+}
+
+.header .logo {
+	margin: auto 0 auto 0;
+	height: 56px;
+	width: auto;
 }
 
 .dataviz-wrap {
@@ -35,11 +44,11 @@ body {
 }
 
 canvas {
-	border-radius: 7.5px;
+	border-radius: 0;
 }
 
 .dataviz-dash {
-	margin: 48px 76px 0 76px;
+	margin: 48px 76px 48px 76px;
 	display: flex;
 	gap: 16px;
 }

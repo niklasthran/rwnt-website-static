@@ -98,10 +98,9 @@ const material 	= 	new THREE.MeshBasicMaterial
 						transparent: true,
 						opacity: 1.00,
 						side: THREE.DoubleSide,
-						depthWrite: true
+						depthWrite: false
 					});
-
-////////////////////////////				
+			
 // Custom opacity attribute to be changed per instance
 const opacities = new Float32Array(n_geos);
 geometry.setAttribute("instanceOpacity", new THREE.InstancedBufferAttribute(opacities, 1));
@@ -142,7 +141,6 @@ material.onBeforeCompile = (shader) => {
         `
     );
 };
-////////////////////////////
 
 const cuboids 	= 	new THREE.InstancedMesh
 					(
@@ -152,13 +150,17 @@ const cuboids 	= 	new THREE.InstancedMesh
 					);
 
 // Colors
+// FSR
 const cscaleA = D3.scaleLinear().domain([0, 4]).range(['#f4f4f4', '#2c9cd1']);
 const cscaleB = D3.scaleLinear().domain([0, 4]).range(['#f4f4f4', '#4f53c2']);
 
+// NfL
 const maxScore = D3.max(merge_group.flat(), d => d.nfl);
 const cscaleC = D3.scaleLinear().domain([0.0, maxScore]).range(['#dbd56e', '#dbd56e']);
 
+// OPM
 const cscaleD = D3.scaleLinear().domain([0, 4]).range(['#af80a6', '#af80a6']);
+////////////////////////////
 
 
 ////////////////////////////
@@ -181,22 +183,13 @@ const dummy = new THREE.Object3D();
 
 for (let i = 0; i < merge_group.length; i++) {
 
-	//let pX = 0;
-	//let pZ = 0;
-
-	//let pX = spiral_coord[i].x;
-	//let pZ = spiral_coord[i].y;
+	let pX = spiral_coord[i].x;
+	let pZ = spiral_coord[i].y;
 
 	// starting at 3rd object in id array, cutting off earliest data
 	for (let j = 1; j < merge_group[i].length; j++) {
 
 		let date = Math.round(merge_group[i][j]["date"] / day) - day_offset;
-
-		let r = Math.sqrt(Math.random());
-		let theta = Math.random() * 2 * Math.PI;
-		
-		let pX = r * Math.cos(theta)
-		let pZ = r * Math.sin(theta)
 
 		for (const [key, value] of Object.entries(merge_group[i][j])) {
 
@@ -299,7 +292,6 @@ for (let i = 0; i < merge_group.length; i++) {
 }
 
 console.log(counter);
-
 scene.add(cuboids);
 
 // Update custom geometry attribute
@@ -311,23 +303,10 @@ geometry.attributes.instanceOpacity.needsUpdate = true;
 /* Camera */
 
 const aspect = container.clientWidth / container.clientHeight;
-
-/*
-let size = 100;
-const camera = new THREE.OrthographicCamera(
-	(size * aspect) / -2,
-	(size * aspect) / 2,
-	size / 2,
-	size / -2,
-	1,
-	10000
-);
-*/
-
-const camera = new THREE.PerspectiveCamera(75, aspect, 1, 100000);
+const camera = new THREE.PerspectiveCamera(60, aspect, 1, 100000);
 
 camera.position.set(0, 0, R * 1.15);
-camera.lookAt(0, 0, 0);
+camera.lookAt(0, 100, 0);
 scene.add(camera);
 
 const axesHelper = new THREE.AxesHelper(10);
@@ -368,13 +347,7 @@ function onWindowResize() {
 
 	const newAspect = container.clientWidth / container.clientHeight;
 
-	/*
-	camera.left = (size * newAspect) / -2;
-	camera.right = (size * newAspect) / 2;
-	*/
-
 	camera.aspect = newAspect;
-
 	camera.updateProjectionMatrix();
 
 	renderer.setSize(container.clientWidth, container.clientHeight);
@@ -428,23 +401,35 @@ function opacity_ctrl(o_fsr=1.0, o_opm=1.0, o_nfl=1.0) {
 }
 
 // Default values --> full opacity
-let A = 1.0;
-let B = 1.0;
-let C = 1.0;
+let A = null;
+let B = null;
+let C = null;
 
 const cb_fsr = document.getElementById("cb_fsr");
 const cb_opm = document.getElementById("cb_opm");
 const cb_nfl = document.getElementById("cb_nfl");
 
+const box_fsr = document.getElementById("box_fsr");
+const box_opm = document.getElementById("box_opm");
+const box_nfl = document.getElementById("box_nfl");
+
 [cb_fsr, cb_opm, cb_nfl].forEach(cb => cb.addEventListener("change", updateValues));
 
 // when cb unchecked --> value to 0.1
 function updateValues() {
-    A = cb_fsr.checked ? 1.0 : 0.1;
-    B = cb_opm.checked ? 1.0 : 0.1;
-    C = cb_nfl.checked ? 1.0 : 0.1;
+    A = cb_fsr.checked ? 1.0 : 0.0;
+    B = cb_opm.checked ? 1.0 : 0.0;
+    C = cb_nfl.checked ? 1.0 : 0.0;
 
     opacity_ctrl(A, B, C);
+
+	A = cb_fsr.checked ? "#000000" : "#CCCCCC";
+	B = cb_opm.checked ? "#000000" : "#CCCCCC";
+	C = cb_nfl.checked ? "#000000" : "#CCCCCC";
+
+	box_fsr.style.color = A;
+	box_opm.style.color = B;
+	box_nfl.style.color = C;
 }
 ////////////////////////////
 
