@@ -15,20 +15,34 @@ html {
 
 body {
 	width: 100%;
-	height: 100%;
+	/*height: 100%;*/
 	margin: 0 auto 0 auto;
 }
 
 .header {
-	margin: 0 76px 0 76px;
 	height: 124px;
 	display: flex;
+	position: sticky;
+	top: 0;
+	background-color: #ffffff;
 }
 
 .header .logo {
-	margin: auto 0 auto 0;
+	margin: auto 76px auto 76px;
 	height: 56px;
 	width: auto;
+}
+
+.header button {
+	display: inline-block;
+	height: 42px;
+	margin: auto 76px auto auto;
+	background-color: #D4D6F0;
+	border-radius: 5px;
+	border: none;
+	font-family: Inter-Medium;
+	font-size: 14px;
+	padding: 0 14px 0 14px;
 }
 
 .dataviz-wrap {
@@ -40,7 +54,7 @@ body {
 
 .dataviz {
 	width: 100%;
-	height: 490px;
+	height: calc(100vh - 124px - 248px);
 }
 
 canvas {
@@ -95,4 +109,17 @@ canvas {
 .dataviz-dash-box {
 	width: 100%;
 	border-top: 1.5px black solid;
+	transition: opacity 0.5s ease;
+}
+
+.dataviz-dash:has(#cb_fsr:not(:checked)) #box_fsr {
+    opacity: 0.25;
+}
+
+.dataviz-dash:has(#cb_opm:not(:checked)) #box_opm {
+    opacity: 0.25;
+}
+
+.dataviz-dash:has(#cb_nfl:not(:checked)) #box_nfl {
+    opacity: 0.25;
 }

@@ -409,10 +409,6 @@ const cb_fsr = document.getElementById("cb_fsr");
 const cb_opm = document.getElementById("cb_opm");
 const cb_nfl = document.getElementById("cb_nfl");
 
-const box_fsr = document.getElementById("box_fsr");
-const box_opm = document.getElementById("box_opm");
-const box_nfl = document.getElementById("box_nfl");
-
 [cb_fsr, cb_opm, cb_nfl].forEach(cb => cb.addEventListener("change", updateValues));
 
 // when cb unchecked --> value to 0.1
@@ -422,14 +418,6 @@ function updateValues() {
     C = cb_nfl.checked ? 1.0 : 0.0;
 
     opacity_ctrl(A, B, C);
-
-	A = cb_fsr.checked ? "#000000" : "#CCCCCC";
-	B = cb_opm.checked ? "#000000" : "#CCCCCC";
-	C = cb_nfl.checked ? "#000000" : "#CCCCCC";
-
-	box_fsr.style.color = A;
-	box_opm.style.color = B;
-	box_nfl.style.color = C;
 }
 ////////////////////////////
 
