@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel= "stylesheet" type= "text/css" href="style.css">
+        
+        <script type="importmap">
+			{
+				"imports": {
+					"three": "../_libraries/three.module.min.js",
+                    "d3": "../_libraries/d3/d3-7-9-0.js",
+                    "xlsx": "../_libraries/xlsx.mjs",
+                    "gsap": "../_libraries/gsap-core.js"
+				}
+			}
+		</script>
+
+        <script type="module" src="_scripts/processXLSX.js"></script>
+        <script type="module" src="_scripts/script.js"></script>
+    </head>
+
+    <body>
+        <div class="header">
+            <div>
+                <img src="../_assets/APST_Logo.svg" class="logo"/>
+            </div>
+            <div>
+                <button>Contact</button>
+            </div>
+        </div>
+
+        <div class="dataviz-wrap">
+
+            <div class="dataviz"></div>
+
+            <div class="dataviz-dash">
+                <div class="dataviz-dash-box" id="box_fsr">
+                    <h4>ALSFRS-R-Bewertungen</h4>
+                    <ul>
+                        <li><p id="num_fsr"></p></li>
+                    </ul>
+                </div>
+
+                <div class="dataviz-dash-box" id="box_opm">
+                    <h4>Phänotypen</h4>
+                    <ul>
+                        <li><p id="num_opm"></p></li>
+                    </ul>
+                </div>
+
+                <div class="dataviz-dash-box" id="box_nfl">
+                    <h4>Nf-L-Biomarker</h4>
+                    <ul>
+                        <li><p id="num_nfl"></p></li>
+                    </ul>
+                </div>
+
+                <div class="dataviz-dash-box">
+                    <h4>Zeige:</h4>
+                    <ul>
+                        <li>
+                            <input type="checkbox" id="cb_fsr" checked> 
+                            <label for="cb_fsr" class="p-small">ALSFRS-R-Bewertungen</label>
+                        </li>
+
+                        <li>
+                            <input type="checkbox" id="cb_opm" checked> 
+                            <label for="cb_opm" class="p-small">Phänotypen</label>
+                        </li>
+
+                        <li>
+                            <input type="checkbox" id="cb_nfl" checked>
+                            <label for="cb_nfl" class="p-small">Nf-L-Biomarker</label>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <section>
+            <h1>
+                ALS Functional Rating Scale (ALSFRS-R)
+            </h1>
+
+            <h2>
+                The ALS Functional Rating Scale-Revised (ALSFRS-R), is widely used to characterize the disease trajectory in clinical research and drug trials. The ALSFRS-R is the main instrument to assess symptoms and motor functions in ALS trials. It comprises 12 items with 5 rating options (0 to 4).
+            </h2>
+
+            <article>
+                <div class="article-text">
+                    <p>
+                        The rate of ALS progression, quantified by the monthly change in the ALSFRS-R, is widely used to characterize the disease trajectory in ALS. It has been shown to correlate with survival and the biomarker neurofilament light chain (NfL). A reduction in the slowing of the functional decline is recognized by regulatory authorities as effectiveness endpoint in ALS drug development programs. Consequently, most clinical trial protocols have incorporated ALS progression, measured as the change of ALSFRS-R from baseline, as a primary or secondary outcome measure.
+                    </p>
+                </div>
+                <figure>
+                    <img src="../_assets/Viz13_3JS-Tests_V13_R02.png">
+                    <figcaption>Bildbeschreibung</figcaption>
+                </figure>
+            </article>
+
+            <article>
+                <div class="article-text">
+                    <h2>
+                        ALS Functional Rating Scale as primary treatment response marker in ALS.
+                    </h2>
+                    <p>
+                        ALS progression (ALS-PR) as measured by the monthy change of the ALSFRS-R (“slope”) before (“running in”) and during treatment (“observation”) serve as primary outcome parameter. In this example, patient #1 and #2 show different ALS-PR at baseline, and reductions of ALS-PR during treatment with an investigational drug.
+                    </p>
+                </div>
+                <figure>
+                    <img src="../_assets/Viz13_3JS-Tests_V13_R02.png">
+                    <figcaption>Bildbeschreibung</figcaption>
+                </figure>
+            </article>
+
+            <h2>
+                The self-explanatory version of the ALSFRS-R (ALSFRS-R-SE) includes instructions and explanations for each item, facilitating the assessment for patients. The ALSFRS-R-SE is used for remote digital assessment via the ALS App. It may increase the efficiency of clinical studies if the rating of ALSFRS-R is moved to digital data capture, which requires less effort from patients with impaired speech and mobility and less resources of health care professionals.
+            </h2>
+
+            <article>
+                <div class="article-text">
+                    <h2>
+                        Clinic and remote digital assessment of the ALSFRS-R.
+                    </h2>
+                    <p>
+                        Overview of ALSFRS-R assessments during clinic visits and via the ALS App as analyzed in 3 groups of ALS progression rate (ALSPR), respectively: slower progressing ALS (<0.5 ALSFRS-R/month), intermediate progressing ALS (≥0.5 and ≤1.0 ALSFRS-R/month) and faster progressing ALS (> 1.0 ALSFRS-R/month). Every dot represents one assessment. The mean progression is shown in the blue graph and the shadow represents its variation. Figure, courtesy of the authors of reference (3).
+                    </p>
+                </div>
+                <figure>
+                    <img src="../_assets/Viz13_3JS-Tests_V13_R02.png">
+                    <figcaption>Bildbeschreibung</figcaption>
+                </figure>
+            </article>
+        </section>
+
+        <section class="value-prop-fsr">
+            <h2>
+                Value proposition of ALSFRS-R
+            </h2>
+
+            <div class="intro">
+                <div class="intro-col">
+                    <h3>
+                        Inclusion or exclusion criteria
+                    </h3>
+                    <p class="p-small">
+                        Functional impairment of participants is categorized using the total ALSFRS-R score. and used as inclusion or exclusion criteria of most clinical trials. Patients with moderate impairment are typically enrolled in clinical studies.
+                    </p>
+                </div>
+
+                <div class="intro-col">
+                    <h3>
+                        Trial enrichment and stratification
+                    </h3>
+                    <p class="p-small">
+                        Based on the slope of ALSFRS-R, prognostic groups of slower, intermediate, and faster ALS progression have been defined and used as stratification criteria in ALS trials.
+                    </p>
+                </div>
+
+                <div class="intro-col">
+                    <h3>
+                        Treatment response
+                    </h3>
+                    <p class="p-small">
+                        A reduction in the slowing of the functional decline is recognized by regulatory authorities as effectiveness endpoint in ALS drug development programs. Consequently, most clinical trial protocols have incorporated the ALS progression, measured as the change of ALSFRS-R from baseline, as a primary or secondary outcome measure.
+                    </p>
+                </div>
+            </div>
+
+            <article>
+                <div class="article-text">
+                    <p>
+                        The ALSFRS-R is the principal functional endpoint in most ALS drug development programs. Pre-defined total score ranges and baseline ALSFRS-R slopes are commonly applied to reduce heterogeneity of study cohorts. A clear understanding of the methodology, performance characteristics, and limitations of the ALSFRS-R is therefore essential for trial design and for interpreting study outcomes. The growing use of the self-explanatory ALSFRS-R and the increasing availability of remotely collected data support more efficient data capture and may facilitate the digital transformation of ALS trials. As clinical studies increasingly integrate motor phenotypes, biomarkers, and functional trajectories into enrichment strategies, the ALSFRS-R provides the longitudinal anchor that links these variables and contextualizes treatment effects within the overall disease course.
+                    </p>
+                </div>
+                <div class="article-reference">
+                    <h4>
+                        References
+                    </h4>
+                    <p class="footnote">
+                        (1) Meyer T, Spittel S, Grehl T, Weyen U, Steinbach R, Kettemann D, Petri S, Weydt P, Günther R, Baum P, Schlapakow E, Koch JC, Boentert M, Wolf J, Grosskreutz J, Rödiger A, Ilse B, Metelmann M, Norden J, Koc RY, Körtvélyessy P, Riitano A, Walter B, Hildebrandt B, Schaudinn F, Münch C, Maier A. Remote digital assessment of amyotrophic lateral sclerosis functional rating scale - a multicenter observational study. Amyotroph Lateral Scler Frontotemporal Degener. 2023;24:175-184. doi: 10.1080/21678421.2022.2104649.
+                    </p>
+                    <p class="footnote">
+                        (2) Maier A, Boentert M, Reilich P, Witzel S, Petri S, Großkreutz J, Metelmann M, Lingor P, Cordts I, Dorst J, Zeller D, Günther R, Hagenacker T, Grehl T, Spittel S, Schuster J, Ludolph A, Meyer T; MND-NET consensus group. ALSFRS-R-SE: an adapted, annotated, and self-explanatory version of the revised amyotrophic lateral sclerosis functional rating scale. Neurol Res Pract. 2022;4:60. doi: 10.1186/s42466-022-00224-6.
+                    </p>
+                    <p class="footnote">
+                        (3) Steinfurth L, Grehl T, Weyen U, Kettemann D, Steinbach R, Rödiger A, Grosskreutz J, Petri S, Boentert M, Weydt P, Bernsen S, Walter B, GüNTHER R, Lingor P, Koch JC, Baum P, Weishaupt JH, Dorst J, Koc Y, Cordts I, Vidovic M, Norden J, Schumann P, Körtvélyessy P, Spittel S, Münch C, Maier A, Meyer T. Self-assessment of amyotrophic lateral sclerosis functional rating scale on the patient's smartphone proves to be non-inferior to clinic data capture. Amyotroph Lateral Scler Frontotemporal Degener. 2025;26:495-506. doi: 10.1080/21678421.2025.2468404.
+                    </p>
+                </div>
+            </article>
+        </section>
+
+        <!--
+        <h1>Headline 1: Testschrift</h1>
+        <h2>Headline 2: Testschrift</h2>
+        <h3>Headline 3: Testschrift</h3>
+        <h4>Headline 4: Testschrift</h4>
+        <p>Paragraph: Testschrift</p>
+        <p class="p-small">Small paragraph: Testschrift</p>
+        <p class="footnote">Footnote paragraph: Testschrift</p>
+        <figcaption>Bildunterschrift: Testschrift</figcaption>
+        -->
+
+        <div class="footer p-small">
+            <ul>
+                <li>APST Research GmbH</li>
+                <li>Westhafenstraße 1</li>
+                <li>13353 Berlin, Germany</li>
+            </ul>
+            <ul>
+                <li>Contact:</li>
+                <li>info@apstresearch.com</li>
+                <li>+49 30 81031410</li>
+            </ul>
+            <ul>
+                <li><a href="#">Legal information</a></li>
+                <li><a href="#">Data Privacy</a></li>
+                <li><a href="#">GTC</a></li>
+            </ul>
+            <ul>
+                <li>© 2025 APST Research GmbH</li>
+                <li>All rights reserved</li>
+                <li>Design by <a href="https://rwnt.de/">RWNT</a></li>
+            </ul>
+        </div>
+    </body>
+</html>
