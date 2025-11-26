@@ -45,7 +45,7 @@ document.getElementById("num_nfl").innerHTML = num_nfl.toLocaleString();
 ////////////////////////////
 /* DOM fetch */
 
-const container = document.querySelectorAll(".dataviz")[0];
+const container = document.querySelector(".dataviz");
 ////////////////////////////
 
 
@@ -93,6 +93,7 @@ const geometry 	= 	new THREE.BoxGeometry
 						geo_size
 					);
 
+/*
 const material 	= 	new THREE.MeshBasicMaterial
 					({
 						transparent: true,
@@ -100,6 +101,21 @@ const material 	= 	new THREE.MeshBasicMaterial
 						side: THREE.DoubleSide,
 						depthWrite: false
 					});
+*/
+
+const material 	= 	new THREE.MeshPhysicalMaterial
+(
+	{
+		roughness: 0.7,   
+		transmission: 1.0,  
+		thickness: 7,
+		ior: 1.25,
+		transparent: true,
+		opacity: 0.99,
+		side: THREE.DoubleSide,
+		depthWrite: true
+	}
+);
 			
 // Custom opacity attribute to be changed per instance
 const opacities = new Float32Array(n_geos);
@@ -308,9 +324,6 @@ const camera = new THREE.PerspectiveCamera(60, aspect, 1, 100000);
 camera.position.set(0, 0, R * 1.15);
 camera.lookAt(0, 100, 0);
 scene.add(camera);
-
-const axesHelper = new THREE.AxesHelper(10);
-scene.add(axesHelper);
 ////////////////////////////
 
 
@@ -405,9 +418,9 @@ const cb_nfl = document.getElementById("cb_nfl");
 
 // Default values --> full opacity
 const state = {
-	A: 1.0,
-	B: 1.0,
-	C: 1.0
+	A: 0.99,
+	B: 0.99,
+	C: 0.99,
 };
 
 // when cb unchecked --> value to 0.0
@@ -416,9 +429,9 @@ function updateValues() {
 	(
 		state,
 		{
-			A: cb_fsr.checked ? 1.0 : 0.0,
-			B: cb_opm.checked ? 1.0 : 0.0,
-			C: cb_nfl.checked ? 1.0 : 0.0,
+			A: cb_fsr.checked ? 0.99 : 0.01,
+			B: cb_opm.checked ? 0.99 : 0.01,
+			C: cb_nfl.checked ? 0.99 : 0.01,
 
 			duration: 0.33,
 			ease: "power2.inOut",
