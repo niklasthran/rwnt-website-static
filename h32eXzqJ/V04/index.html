@@ -10,26 +10,34 @@
 					"three": "../modules/three.module.min.js",
                     "d3": "../modules/d3/d3-7-9-0.js",
                     "xlsx": "../modules/xlsx.mjs",
-                    "gsap": "../modules/gsap-core.js"
+                    "gsap": "../modules/gsap/all.js"
 				}
 			}
 		</script>
 
         <script type="module" src="processXLSX.js"></script>
-        <script type="module" src="script.js"></script>
+        <script type="module" src="ALSDRViz.js"></script>
     </head>
 
     <body>
         <div class="header">
-            <div>
-                <img src="../assets/APST_Logo.svg" class="logo"/>
+            <div class="logo">
+                <img src="../assets/APST_Logo.svg"/>
             </div>
-            <div>
-                <button>Contact</button>
+
+            <div class="nav p-small">
+                <a href="#als-data-repository">ALS Data Repository</a>
+                <a href="#als-functional-rating-scale">ALS Functional Rating Scale</a>
+                <a href="#als_motor_phenotypes">ALS Motor Phenotypes</a>
+                <a href="#neurofilament">Neurofilament</a>
             </div>
         </div>
 
-        <div class="dataviz-wrap">
+        <div class="dataviz-wrap" id="als-data-repository">
+
+            <div id="dataviz-loader">
+                <img src="../assets/spinner.gif"/>
+            </div>
 
             <div class="dataviz"></div>
 
@@ -57,7 +65,7 @@
                     </ul>
                 </div>
 
-                <div class="dataviz-dash-box">
+                <div class="dataviz-dash-box" id="box_cb">
                     <h4>Show:</h4>
                     <ul>
                         <li>
@@ -79,7 +87,7 @@
             </div>
         </div>
 
-        <section>
+        <section id="als-functional-rating-scale">
             <h1>
                 ALS Functional Rating Scale (ALSFRS-R)
             </h1>
