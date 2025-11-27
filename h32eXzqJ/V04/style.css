@@ -194,8 +194,8 @@ canvas {
 	margin: 0 calc(76px - 14px) 0 calc(76px - 14px);
 	height: 42px;
 	padding: 14px 14px 14px 14px;
-	background: #F2F3F4;
-	/*backdrop-filter: blur(10px);*/
+	/*background: #F2F3F4;*/
+	backdrop-filter: blur(2px);
 	top: calc(124px + 50px);
 }
 
