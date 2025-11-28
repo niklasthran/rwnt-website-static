@@ -1,0 +1,128 @@
+html {
+	width: 100%;
+	height: 100%;
+	background-color: #FFFFFF;
+}
+
+body {
+	width: 100%;
+	margin: 0 auto 0 auto;
+	background-color: #F2F3F4;
+}
+
+
+/* Data visualization (DV) */
+.dataviz-wrap {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	background-color: #FFFFFF;
+}
+
+.dataviz {
+	width: 100%;
+	height: 100vh;
+}
+
+canvas {
+	border-radius: 0;
+}
+
+
+.dataviz-label {
+	position: absolute;
+	z-index: 1;
+	margin: 0 calc(76px - 14px) 0 calc(76px - 14px);
+	height: 42px;
+	padding: 14px 14px 14px 14px;
+	top: calc(124px + 50px);
+}
+
+/* Loader graphic */
+#dataviz-loader {
+	position: absolute;
+	z-index: 1;
+
+	top: calc(124px + 190px);
+
+	margin: 0 50vw 0 50vw;
+  	transform: translateX(-50%);
+}
+
+#dataviz-loader svg {
+	width: 50px;
+	height: 50px;
+}
+
+/* loader SVG colors */
+.base, .rect1 {
+	fill: #9e9e9e;
+}
+
+.rect2 {
+	fill: #d9d9d9;
+}
+
+.rect3 {
+	fill: #efefef;
+}
+
+/* DV dashboard */
+.dataviz-dash {
+	padding: 41px 76px 41px 76px;
+}
+
+.dataviz-dash ul {
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+}
+
+.dataviz-dash-box {
+	grid-column: span 3;
+	border-top: 1.5px black solid;
+	transition: color 0.5s ease;
+}
+
+.dataviz-dash-box h4 {
+	line-height: 38px;
+}
+
+.dataviz-dash-box label {
+	line-height: 18px;
+	margin: 0;
+}
+
+#cb_fsr {
+	accent-color: #2c9cd1;
+}
+
+#cb_opm {
+	accent-color: #af80a6;
+}
+
+#cb_nfl {
+	accent-color: #dbd56e;
+}
+
+#box_fsr,
+#box_opm,
+#box_nfl {
+	color: #000;
+}
+
+.dataviz-dash:has(#cb_fsr:not(:checked)) #box_fsr,
+.dataviz-dash:has(#cb_opm:not(:checked)) #box_opm,
+.dataviz-dash:has(#cb_nfl:not(:checked)) #box_nfl {
+    color: #ccc;
+}
+
+#num_fsr,
+#num_opm,
+#num_nfl {
+	font-family: Inter-ExtraLight;
+	font-size: 54px;
+	line-height: 58px;
+	font-weight: normal;
+}

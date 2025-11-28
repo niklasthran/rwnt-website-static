@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel= "stylesheet" type= "text/css" href="style.css">
+        
+        <script type="importmap">
+			{
+				"imports": {
+					"three": "../modules/three.module.min.js",
+                    "d3": "../modules/d3/d3-7-9-0.js",
+                    "gsap": "../modules/gsap/all.js"
+				}
+			}
+		</script>
+
+        <script type="module" src="ALSDRViz.js"></script>
+    </head>
+
+    <body>
+
+        <div class="dataviz-wrap" id="als-data-repository">
+
+            <div id="dataviz-loader">
+                <svg viewBox="0 0 200 300">
+                    <rect class="base" y="281.2" width="178.1" height="9.8" />
+                    <rect class="rect1" x="0" y="88.9" width="38" height="170" />
+                    <rect class="rect2" x="70.1" width="38" height="258.9" />
+                    <rect class="rect3" x="140.1" y="125.7" width="38" height="133.2" />
+                </svg>
+            </div>
+
+            <div class="dataviz"></div>
+        </div>
+    </body>
+</html>
