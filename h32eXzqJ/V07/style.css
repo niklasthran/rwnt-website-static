@@ -1,16 +1,98 @@
 @font-face {
 	font-family: Inter-ExtraLight;
-	src: url(../assets/Inter-ExtraLight.woff2);
+	src: url(../assets/fonts/Inter-ExtraLight.woff2);
 }
 
 @font-face {
-	font-family: Inter-Medium;
-	src: url(../assets/Inter-Medium.woff2);
+	font-family: Inter-Light;
+	src: url(../assets/fonts/Inter-Light.woff2);
 }
 
 @font-face {
 	font-family: Inter-Regular;
-	src: url(../assets/Inter-Regular.woff2);
+	src: url(../assets/fonts/Inter-Regular.woff2);
+}
+
+@font-face {
+	font-family: Inter-Italic;
+	src: url(../assets/fonts/Inter-Italic.woff2);
+}
+
+@font-face {
+	font-family: Inter-Medium;
+	src: url(../assets/fonts/Inter-Medium.woff2);
+}
+
+@font-face {
+	font-family: Inter-MediumItalic;
+	src: url(../assets/fonts/Inter-MediumItalic.woff2);
+}
+
+@font-face {
+	font-family: Inter-Bold;
+	src: url(../assets/fonts/Inter-Bold.woff2);
+}
+
+h2 {
+	font-family: Inter-ExtraLight;
+	font-size: 54px;
+	line-height: 64px;
+	font-weight: 100;
+}
+
+h3 {
+	font-family: Inter-Light;
+	font-size: 32px;
+	line-height: 45px;
+	font-weight: 100;
+}
+
+p,
+article.infocolumns h2,
+article.references h2 {
+	font-family: Inter-Light;
+	font-size: 24px;
+	line-height: 36px;
+	font-weight: 100;
+}
+
+figure h2 {
+	font-family: Inter-Italic;
+	font-size: 18px;
+	line-height: 27px;
+	font-weight: 100;
+}
+
+figure p {
+	font-family: Inter-MediumItalic;
+	font-size: 14px;
+	line-height: 22px;
+	font-weight: 100;
+}
+
+article.infocolumns p,
+article.references p {
+	font-family: Inter-Regular;
+	font-size: 18px;
+	line-height: 27px;
+	font-weight: 100;
+}
+
+small,
+article.references aside p,
+.nav-desktop,
+.footer {
+	font-family: Inter-Medium;
+	font-size: 14px;
+	line-height: 22px;
+	font-weight: 100;
+}
+
+article.references aside h2 {
+	font-family: Inter-Bold;
+	font-size: 14px;
+	line-height: 22px;
+	font-weight: 100;
 }
 
 /* CSS Animation */
@@ -28,10 +110,22 @@
 	animation: fadeIn 0.6s ease forwards;
 }
 
-.nav {
+.nav-desktop {
 	opacity: 0;
 	animation: fadeIn 0.6s ease forwards;
 	animation-delay: 0.1s;
+}
+
+.nav-mobile {
+	opacity: 0;
+	animation: fadeIn 0.6s ease forwards;
+	animation-delay: 0.0s;
+}
+
+.nav-mobile a {
+	opacity: 0;
+	animation: fadeIn 0.6s ease forwards;
+	animation-delay: 0.2s;
 }
 
 #dataviz-loader {
@@ -88,11 +182,12 @@ section {
 }
 
 /*-----------------------------------------*/
-
+/* Global */
 html {
 	width: 100%;
 	height: 100%;
 	background-color: #FFFFFF;
+	scroll-behavior: smooth;
 }
 
 body {
@@ -103,31 +198,42 @@ body {
 
 
 /* All sections displayed as grid */
-article,
 .intro,
 .dataviz-dash,
-.header {
+.header,
+article figure,
+article.references,
+article.infocolumns {
 	display: grid;
 	grid-template-columns: repeat(12, 1fr);
 	column-gap: 16px;
 }
 
-/* Header */
-.header {
-	height: 124px;
-	padding: 0 76px 0 76px;
+section,
+.dataviz-dash {
+	padding: 41px 76px 41px 76px;
+}
 
+/*-----------------------------------------*/
+
+/* Header */
+.header-wrap {
 	position: sticky;
 	top: 0;
 	background-color: #FFFFFF;
-
 	z-index: 999;
+}
+
+.header {
+	padding: 0 76px 0 76px;
+	height: 124px;
 	align-content: center;
 }
 
 .logo {
 	grid-column: 1 / span 3;
 	display: inherit;
+	align-items: center;
 }
 
 .logo img {
@@ -135,7 +241,7 @@ article,
 	width: auto;
 }
 
-.nav {
+.nav-desktop {
 	height: 56px;
 	grid-column: 4 / span 8;
 	display: flex;
@@ -143,7 +249,8 @@ article,
 	align-items: flex-end;
 }
 
-.nav a {
+.nav-desktop a,
+.nav-mobile a {
 	padding-top: 10px;
 	text-decoration: none;
 	color: #000000;
@@ -152,9 +259,25 @@ article,
 	transition: border 0.5s ease;
 }
 
-.nav a:hover,
-.nav a:active {
+.nav-mobile a {
+	padding-top: 10px;
+	text-decoration: none;
+	color: #000000;
+
+	border-top: 1.5px #F2F3F4 solid;
+	transition: border 0.5s ease;
+}
+
+.nav-desktop a:hover,
+.nav-mobile a:hover,
+.nav-desktop a:active,
+.nav-mobile a:active {
 	border-top: 1.5px black solid;
+}
+
+.hamburger,
+.nav-mobile {
+	display: none;
 }
 
 #als-data-repository,
@@ -162,17 +285,6 @@ article,
 #als_motor_phenotypes,
 #neurofilament {
 	scroll-margin-top: 124px;
-}
-
-.header button {
-	font-family: Inter-Medium;
-	font-size: 14px;
-	height: 42px;
-	padding: 0 14px 0 14px;
-	background-color: #D4D6F0;
-	border-radius: 5px;
-	border: none;
-	float: right;
 }
 
 /* Footer */
@@ -188,9 +300,7 @@ article,
 
 .footer ul {
 	padding: 0;
-
 	align-content: center;
-
 	list-style-type: none;
 }
 
@@ -217,10 +327,16 @@ canvas {
 .dataviz-label {
 	position: absolute;
 	z-index: 1;
+	top: calc(124px - 14px + 41px);
+
 	margin: 0 calc(76px - 14px) 0 calc(76px - 14px);
-	height: 42px;
-	padding: 14px 14px 14px 14px;
-	top: calc(124px + 50px);
+	padding: 12px 14px 5px 14px;
+}
+
+.dataviz-label p {
+	margin: 0;
+	padding: 0;
+	border-top: 1.5px black solid;
 }
 
 /* Loader graphic */
@@ -253,10 +369,6 @@ canvas {
 }
 
 /* DV dashboard */
-.dataviz-dash {
-	padding: 41px 76px 41px 76px;
-}
-
 .dataviz-dash ul {
 	list-style-type: none;
 	padding: 0;
@@ -269,12 +381,15 @@ canvas {
 	transition: color 0.5s ease;
 }
 
-.dataviz-dash-box h4 {
-	line-height: 38px;
+.dataviz-dash-box small {
+	line-height: 29px;
+}
+
+.dataviz-dash-box h2 {
+	line-height: 52px;
 }
 
 .dataviz-dash-box label {
-	line-height: 18px;
 	margin: 0;
 }
 
@@ -305,21 +420,14 @@ canvas {
 #num_fsr,
 #num_opm,
 #num_nfl {
-	font-family: Inter-ExtraLight;
-	font-size: 54px;
-	line-height: 58px;
-	font-weight: normal;
+	margin: 0;
 }
 
 
-/* Sections – Main */
-section {
-	padding: 64px 76px 64px 76px;
+article.dataviz-article {
+	grid-column: span 12;
 }
 
-section h2 {
-	margin: 33px 0 0 0;
-}
 
 /* Sections – Sub */
 .value-prop-fsr {
@@ -340,108 +448,33 @@ section h2 {
 	margin: 0;
 }
 
-/* Intro */
-.intro {
-	margin: 33px 0 0 0;
-}
-
-.intro-col {
-	grid-column: span 4;
-}
-
-.intro-col p {
-	margin: 5px 0 0 0;
-}
-
 /* Article */
-article {
-	margin: 89px 0 0 0;
-}
-
-.article-text {
-	grid-column: 1 / span 6;
-	grid-row: 1;
-}
-
-.article-text h2 {
-	margin: 0 0 5px 0;
-}
-
-/* Article – Image */
 article figure {
-	grid-column: 7 / span 6;
-	grid-row: 1;
 	margin: 0;
 }
-
-article img {
+article figure img {
+	grid-column: 1 / span 6;
 	width: 100%;
+}
+
+article figure figcaption {
+	grid-column: 8 / span 12;
 }
 
 
 /* Article – Reference */
-.article-reference {
+article.references p {
+	grid-column: 1 / span 6;
+}
+
+article.references aside {
 	grid-column: 9 / span 4;
 }
 
-.article-reference p {
-	margin: 16px 0 0 0;
+article.infocolumns div {
+	grid-column: span 4;
 }
 
-
-
-
-h1 {
-	border-top: 1.5px black solid;
-	display: inline-block;
-
-	margin: 0;
-
-	font-family: Inter-ExtraLight;
-	font-weight: normal;
-
-	line-height: 58px;
-	font-size: 24px;
-}
-
-h2 {
-	font-family: Inter-ExtraLight;
-	font-weight: normal;
-	
-	font-size: 32px;
-	line-height: 45px;
-}
-
-h3,
-p {
-	margin: 0;
-
-	font-family: Inter-Regular;
-	font-weight: normal;
-
-	font-size: 18px;
-	line-height: 27px;
-}
-
-h4,
-.p-small {
-	margin: 0;
-
-	font-family: Inter-Medium;
-	font-weight: normal;
-
-	font-size: 14px;
-	line-height: 22px;
-}
-
-figcaption,
-.footnote {
-	font-family: Inter-Medium;
-	font-weight: normal;
-
-	font-size: 10px;
-	line-height: 16px;
-}
 
 /* 1280px as max width + 76px padding * 2 (left and right) */
 @media screen and (min-width: 1432px) {
@@ -465,26 +498,32 @@ figcaption,
 }
 
 /* Mobile version portrait */
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 875px) {
 
 	/* Global grid: collapse to 1 column */
-	article,
 	.intro,
-	.header {
+	.dataviz-dash,
+	.header,
+	article figure,
+	article.references,
+	article.infocolumns {
 		grid-template-columns: 1fr;
 		column-gap: 0;
 	}
 
 	/* Body + global spacing */
-	section {
-		padding: 32px 24px 32px 24px;
+	section,
+	.dataviz-dash {
+		padding: 24px;
 	}
 
 	/* Header */
+
 	.header {
-		height: auto;
-		padding: 16px 24px 16px 24px;
+		padding: 0 24px 0 24px;
+		height: 72px;
 		grid-template-columns: 1fr 1fr;
+		column-gap: 0;
 	}
 
 	.logo {
@@ -496,8 +535,62 @@ figcaption,
 		width: auto;
 	}
 
-	.nav {
+    /* Collapse nav when mobile */
+    .nav-desktop {
+        display: none;
+    }
+	
+	.hamburger {
+		grid-column: 2;
+        display: block;
+		justify-self: end;
+		cursor: pointer;
+		width: 40px;
+    	height: 40px;
+		align-self: center;
+    }
+
+	.hamburger .line {
+		stroke: black;
+		stroke-width: 2px;
+		stroke-linecap: butt;
+
+		transform-origin: center;
+    	transform-box: fill-box;
+		transition: transform 0.3s ease, opacity 0.3s ease;
+	}
+
+
+	/* Cross animation when active */
+	.hamburger.active .top {
+		transform: translateY(9px) rotate(-45deg);
+	}
+
+	.hamburger.active .bottom {
+		transform: translateY(-9px) rotate(45deg);
+	}
+
+	.hamburger.active .middle {
+		opacity: 0;
+	}
+
+	.nav-mobile {
 		display: none;
+		flex-direction: column;
+		background-color:  #F2F3F4;
+		height: calc(100vh - 72px);
+		padding: 32px 24px 32px 24px;
+	}
+
+	.nav-mobile.active {
+		display: flex;
+	}
+
+	#als-data-repository,
+	#als-functional-rating-scale,
+	#als_motor_phenotypes,
+	#neurofilament {
+		scroll-margin-top: 72px;
 	}
 
 	/* Footer */
@@ -515,8 +608,8 @@ figcaption,
 	/* Data visualization wrap */
 	.dataviz-label {
 		margin: 0 calc(24px - 7px) 0 calc(24px - 7px);
-		padding: 7px 7px 0 7px;
-		top: 100px;
+		padding: 8px 7px 3px 7px;
+		top: calc(72px - 8px + 24px);
 	}
 
 	.dataviz {
@@ -531,7 +624,6 @@ figcaption,
 	/* DV dashboard breaks into a table*/
 	.dataviz-dash {
 		grid-template-columns: repeat(6, 1fr);
-		padding: 24px;
 		column-gap: 0;
 	}
 
@@ -548,7 +640,6 @@ figcaption,
 		border: none;
 	}
 
-	#box_cb h4,
 	#box_cb label{
 		display: none;
 	}
@@ -578,92 +669,90 @@ figcaption,
 	#box_nfl {
 		display: grid;
 		grid-template-columns: 1fr 2fr;
+		align-items: center;
 	}
 
-	#box_fsr h4,
-	#box_opm h4,
-	#box_nfl h4 {
-		font-family: Inter-ExtraLight;
-		font-weight: normal;
-		font-size: 20px;
-		line-height: 50px;
-
+	#box_fsr small,
+	#box_opm small,
+	#box_nfl small {
 		grid-column: 2;
-		grid-row: 1
+		grid-row: 1;
+
+		font-family: Inter-ExtraLight;
+		font-size: 18px;
+		line-height: 28px;
 	}
 
 	#num_fsr,
 	#num_opm,
 	#num_nfl {
-		font-family: Inter-ExtraLight;
-		font-weight: normal;
-		font-size: 20px;
-		line-height: 50px;
-
-		grid-column: 1;
-		grid-row: 1
-	}
-
-	/* Intro */
-	.intro {
-		margin: 24px 0 0 0;
-	}
-
-	.intro-col {
-		grid-column: span 1;
-		margin-bottom: 24px;
-	}
-
-	/* Article (stack text above image) */
-	article {
-		margin: 24px 0 0 0;
-	}
-
-	.article-text {
 		grid-column: 1;
 		grid-row: 1;
-		order: 1;
+
+		font-size: 18px;
+		line-height: 28px;
 	}
 
-	article figure {
+
+	/* Article */
+	article figure img {
+		grid-column: 1;
+		grid-row: 1;
+	}
+
+	article figure figcaption {
 		grid-column: 1;
 		grid-row: 2;
-		order: 2;
-		margin-top: 24px;
 	}
 
-	.article-reference {
+
+	/* Article – Reference */
+	article.references p {
 		grid-column: 1;
-		order: 3;
-		margin-top: 24px;
+		grid-row: 1;
 	}
+
+	article.references aside {
+		grid-column: 1;
+		grid-row: 2;
+	}
+
+	article.infocolumns div {
+		grid-column: 1;
+	}
+
+	
 
 	/* Typography scaling */
-	h1 {
-		font-size: 20px;
-		line-height: 36px;
-	}
-
 	h2 {
-		font-size: 26px;
-		line-height: 34px;
+		font-size: 32px;
+		line-height: 40px;
 	}
 
-	h3,
-	p {
-		font-size: 16px;
-		line-height: 24px;
+	h3 {
+		font-size: 24px;
+		line-height: 32px;
 	}
 
-	h4,
-	.p-small {
-		font-size: 13px;
+	p,
+	article.infocolumns h2,
+	article.references h2 {
+		font-size: 18px;
+		line-height: 28px;
+	}
+
+	article.infocolumns p,
+	article.references p,
+	figure h2 {
+		font-size: 14px;
 		line-height: 20px;
 	}
 
-	figcaption,
-	.footnote {
-		font-size: 10px;
-		line-height: 14px;
+	small,
+	article.references aside p,
+	article.references aside h2,
+	figure p {
+		font-size: 11px;
+		line-height: 16px;
 	}
 }

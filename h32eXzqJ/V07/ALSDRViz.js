@@ -47,6 +47,13 @@ const merge_group 			= ALS_DATA["DATA"];
 
 const dom_dataviz 			= document.querySelector(".dataviz");
 const dom_dataviz_loader 	= document.getElementById("dataviz-loader");
+const dom_dataviz_label 	= document.querySelector(".dataviz-label");
+const dom_num_fsr 			= document.getElementById("num_fsr");
+const dom_num_opm 			= document.getElementById("num_opm");
+const dom_num_nfl 			= document.getElementById("num_nfl");
+const cb_fsr 				= document.getElementById("cb_fsr");
+const cb_opm 				= document.getElementById("cb_opm");
+const cb_nfl 				= document.getElementById("cb_nfl");
 ////////////////////////////
 
 
@@ -56,6 +63,19 @@ const dom_dataviz_loader 	= document.getElementById("dataviz-loader");
 
 	// DV + DV label bg are not visible yet
 	dom_dataviz.style.opacity = 0;
+	dom_dataviz_label.style.background = "#FFFFFF";
+
+	// Displaying numbers as HTML p-elements
+	dom_num_fsr.innerHTML = num_fsr_mean.toLocaleString('en-US');
+	dom_num_opm.innerHTML = num_opm.toLocaleString('en-US');
+	dom_num_nfl.innerHTML = num_nfl.toLocaleString('en-US');
+
+	// ... but not visible yet
+	dom_num_fsr.style.opacity = 0;
+	dom_num_opm.style.opacity = 0;
+	dom_num_nfl.style.opacity = 0;
+
+
 	////////////////////////////
 	/* Scene and lights */
 
@@ -296,7 +316,7 @@ const dom_dataviz_loader 	= document.getElementById("dataviz-loader");
 	const aspect = dom_dataviz.clientWidth / dom_dataviz.clientHeight;
 	const camera = new THREE.PerspectiveCamera(60, aspect, 1, 100000);
 
-	camera.position.set(0, 0, R * 1.4);
+	camera.position.set(0, 0, R * 1.15);
 	camera.lookAt(0, 100, 0);
 	scene.add(camera);
 	////////////////////////////
@@ -347,6 +367,77 @@ const dom_dataviz_loader 	= document.getElementById("dataviz-loader");
 
 
 	////////////////////////////
+	/* Opacity UI */
+
+	function opacity_ctrl(o_fsr=1.0, o_opm=1.0, o_nfl=1.0) {
+		let counter = 0;
+		for (let i = 0; i < merge_group.length; i++) {
+			for (let j = 1; j < merge_group[i].length; j++) {
+				for (const [key, value] of Object.entries(merge_group[i][j])) {
+
+					if (key.includes("fsr_mean")) {
+						dummy.updateMatrix();
+						cuboids.setMatrixAt(counter, dummy.matrix);
+
+						opacities[counter] = o_fsr;
+						counter++;
+					}
+
+					if (key.includes("opm")) {
+						dummy.updateMatrix();
+						cuboids.setMatrixAt(counter, dummy.matrix);
+
+						opacities[counter] = o_opm;
+						counter++;
+					}
+					
+					if (key.includes("nfl")) {
+						dummy.updateMatrix();
+						cuboids.setMatrixAt(counter, dummy.matrix);
+
+						opacities[counter] = o_nfl;
+						counter++;
+					}
+				}
+			}
+		}
+
+		geometry.attributes.instanceOpacity.needsUpdate = true;
+	}
+
+	// Default values --> full opacity
+	const state = {
+		A: 0.99,
+		B: 0.99,
+		C: 0.99,
+	};
+
+	// when cb unchecked --> value to 0.0
+	function updateValues() {
+		GSAP.to
+		(
+			state,
+			{
+				A: cb_fsr.checked ? 0.99 : 0.01,
+				B: cb_opm.checked ? 0.99 : 0.01,
+				C: cb_nfl.checked ? 0.99 : 0.01,
+
+				duration: 0.33,
+				ease: "power2.inOut",
+
+				onUpdate: () => {
+					opacity_ctrl(state.A, state.B, state.C);
+				}
+			}
+		);
+	}
+
+	// EventListener triggering updateValues function
+	[cb_fsr, cb_opm, cb_nfl].forEach(cb => cb.addEventListener("change", updateValues));
+	////////////////////////////
+
+
+	////////////////////////////
 	/* Animation */
 
 	function animate() {
@@ -364,4 +455,11 @@ const dom_dataviz_loader 	= document.getElementById("dataviz-loader");
 
 	// DV fade in
 	GSAP.to(dom_dataviz, {duration: 4.0, opacity: 1, ease: "power2.out"});
+	GSAP.to(dom_dataviz_label, {duration: 4.0, background: "#F2F3F4", ease: "power2.out"});
+
+	// Numbers fade in	
+	GSAP.to(dom_num_fsr, {duration: 2.0, opacity: 1, ease: "power2.out"});
+	GSAP.to(dom_num_opm, {duration: 2.0, opacity: 1, ease: "power2.out"});
+	GSAP.to(dom_num_nfl, {duration: 2.0, opacity: 1, ease: "power2.out"});
+
 })();
