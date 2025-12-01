@@ -1,8 +1,464 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="UTF-8">
-		<meta http-equiv="refresh" content="0; URL=./V07/index.html">
-	</head>
-	<body></body>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel= "stylesheet" type= "text/css" href="style.css">
+        
+        <script type="importmap">
+			{
+				"imports": {
+					"three": "./modules/three.module.min.js",
+                    "d3": "./modules/d3/d3-7-9-0.js",
+                    "gsap": "./modules/gsap/all.js"
+				}
+			}
+		</script>
+
+        <script type="module" src="ALSDRViz.js"></script>
+        <script src="script.js"></script>
+    </head>
+
+    <body>
+        <div class="header-wrap">
+            <div class="header">
+                <div class="logo">
+                    <a href="./index.html#">
+                        <img src="./assets/APST_Logo.svg"/>
+                    </a>
+                </div>
+
+                <div class="nav-desktop">
+                    <a href="./index.html#als-functional-rating-scale">ALS Functional Rating Scale</a>
+                    <a href="./index.html#als_motor_phenotypes">ALS Motor Phenotypes</a>
+                    <a href="./index.html#neurofilament">Neurofilament light chain (NfL)</a>
+                </div>
+
+                <div class="hamburger" id="hamburger">
+                    <svg viewBox="0 0 40 40">
+                        <line x1="1" y1="11" x2="39" y2="11" class="line top" />
+                        <line x1="1" y1="20" x2="39" y2="20" class="line middle" />
+                        <line x1="1" y1="29" x2="39" y2="29" class="line bottom" />
+                      </svg>
+                </div>
+            </div>
+
+            <div class="nav-mobile">
+                <a href="./index.html#als-functional-rating-scale">ALS Functional Rating Scale</a>
+                <a href="./index.html#als_motor_phenotypes">ALS Motor Phenotypes</a>
+                <a href="./index.html#neurofilament">Neurofilament light chain (NfL)</a>
+            </div>
+        </div>
+
+
+        <div class="dataviz-wrap" id="als-data-repository">
+
+            <div id="dataviz-loader">
+                <svg viewBox="0 0 200 300">
+                    <rect class="base" y="281.2" width="178.1" height="9.8" />
+                    <rect class="rect1" x="0" y="88.9" width="38" height="170" />
+                    <rect class="rect2" x="70.1" width="38" height="258.9" />
+                    <rect class="rect3" x="140.1" y="125.7" width="38" height="133.2" />
+                </svg>
+            </div>
+
+            <div class="dataviz"></div>
+
+            <div class="dataviz-label"><p>ALS Data Repository</p></div>
+
+            <div class="dataviz-dash">
+                <div class="dataviz-dash-box" id="box_fsr">
+                    <small>ALSFRS-R assessments</small>
+                    <h2 id="num_fsr"></h2>
+                </div>
+
+                <div class="dataviz-dash-box" id="box_opm">
+                    <small>Phenotype assessments</small>
+                    <h2 id="num_opm"></h2>
+                </div>
+
+                <div class="dataviz-dash-box" id="box_nfl">
+                    <small>NfL measurements</small>
+                    <h2 id="num_nfl"></h2>
+                </div>
+
+                <div class="dataviz-dash-box" id="box_cb">
+                    <label><small>Show:</small></label>
+                    <ul>
+                        <li>
+                            <input type="checkbox" id="cb_fsr" checked> 
+                            <label for="cb_fsr"><small>ALSFRS-R assessments</small></label>
+                        </li>
+
+                        <li>
+                            <input type="checkbox" id="cb_opm" checked> 
+                            <label for="cb_opm"><small>Phenotype assessments</small></label>
+                        </li>
+
+                        <li>
+                            <input type="checkbox" id="cb_nfl" checked>
+                            <label for="cb_nfl"><small>NfL measurements</small></label>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <article class="dataviz-article">
+                <h2>Data, strategy & evidence generation <br>in ALS therapy</h2>
+                <p>
+                    The APST ALS Data Repository comprises a comprehensive, fastest-growing real-world ALS dataset that combines ALSFRS-R, neurofilament light chain (sNfL), and detailed motor phenotypes. This integrated dataset supports robust disease progression modelling, biomarker validation, and advanced analytics, with secure access to anonymised source data for digital twin populations, machine learning, and trial design and optimisation, creating a clear strategic advantage for academic and industry ALS programmes.
+                </p>
+            </article>
+        </div>
+
+
+        <section id="als-functional-rating-scale">
+            <h2>
+                ALS Functional Rating Scale (ALSFRS-R)
+            </h2>
+
+            <article>
+                <p>
+                    The ALS Functional Rating Scale-Revised (ALSFRS-R), is widely used to characterize the disease trajectory in clinical research and drug trials. The ALSFRS-R is the main instrument to assess symptoms and motor functions in ALS trials. It comprises 12 items with 5 rating options (0 to 4).
+                </p>
+
+                <figure>
+                    <img src="./assets/figures/Viz13_3JS-Tests_V11_R05_Front_transparent.png">
+                    <figcaption>
+                        <h2>
+                            Vertical heat map of a single patient's longitudinal data in the data repository.
+                        </h2>
+                        <p>
+                            Each small coloured tile represents a data category arranged in a vertical stacked strip: ALSFRS (dark blue), NfL (green) and phenotype data (violet).
+                        </p>
+                    </figcaption>
+                </figure>
+
+                <p>
+                    The rate of ALS progression, quantified by the monthly change in the ALSFRS-R, is widely used to characterize the disease trajectory in ALS. It has been shown to correlate with survival and the biomarker neurofilament light chain (NfL). A reduction in the slowing of the functional decline is recognized by regulatory authorities as effectiveness endpoint in ALS drug development programs. Consequently, most clinical trial protocols have incorporated ALS progression, measured as the change of ALSFRS-R from baseline, as a primary or secondary outcome measure.
+                </p>
+
+                <figure>
+                    <img src="./assets/figures/Figure_ALSFRS-R resonse model_20251120.png">
+                    <figcaption>
+                        <h2>
+                            ALS Functional Rating Scale as primary treatment response marker in ALS.
+                        <h2>
+                        <p>
+                            ALS progression (ALS-PR) as measured by the monthy change of the ALSFRS-R (“slope”) before (“running in”) and during treatment (“observation”) serve as primary outcome parameter. In this example, patient #1 and #2 show different ALS-PR at baseline, and reductions of ALS-PR during treatment with an investigational drug.
+                        </p>
+                    </figcaption>
+                </figure>
+
+                <p>
+                    The self-explanatory version of the ALSFRS-R (ALSFRS-R-SE) includes instructions and explanations for each item, facilitating the assessment for patients. The ALSFRS-R-SE is used for remote digital assessment via the ALS App. It may increase the efficiency of clinical studies if the rating of ALSFRS-R is moved to digital data capture, which requires less effort from patients with impaired speech and mobility and less resources of health care professionals.
+                </p>
+
+                <figure>
+                    <img src="./assets/figures/Figure_ALSFRS-R clinic and remote assessment_20251120.png">
+                    <figcaption>
+                        <h2>
+                            Clinic and remote digital assessment of the ALSFRS-R.
+                        </h2>
+                        <p>
+                            Overview of ALSFRS-R assessments during clinic visits and via the ALS App as analyzed in 3 groups of ALS progression rate (ALSPR), respectively: slower progressing ALS (<0.5 ALSFRS-R/month), intermediate progressing ALS (≥0.5 and ≤1.0 ALSFRS-R/month) and faster progressing ALS (> 1.0 ALSFRS-R/month). Every dot represents one assessment. The mean progression is shown in the blue graph and the shadow represents its variation. Figure, courtesy of the authors of reference (3).
+                        </p>
+                    </figcaption>
+                </figure>
+
+            </article>
+        </section>
+
+        
+        <section class="value-prop-fsr">
+            <h3>
+                Value proposition of ALSFRS-R
+            </h3>
+
+            <article class="infocolumns">
+                <div>
+                    <h2>
+                        Inclusion or exclusion criteria
+                    </h2>
+                    <p>
+                        Functional impairment of participants is categorized using the total ALSFRS-R score. and used as inclusion or exclusion criteria of most clinical trials. Patients with moderate impairment are typically enrolled in clinical studies.
+                    </p>
+                </div>
+
+                <div>
+                    <h2>
+                        Trial enrichment and stratification
+                    </h2>
+                    <p>
+                        Based on the slope of ALSFRS-R, prognostic groups of slower, intermediate, and faster ALS progression have been defined and used as stratification criteria in ALS trials.
+                    </p>
+                </div>
+
+                <div>
+                    <h2>
+                        Treatment response
+                    </h2>
+                    <p>
+                        A reduction in the slowing of the functional decline is recognized by regulatory authorities as effectiveness endpoint in ALS drug development programs. Consequently, most clinical trial protocols have incorporated the ALS progression, measured as the change of ALSFRS-R from baseline, as a primary or secondary outcome measure.
+                    </p>
+                </div>
+            </article>
+
+            <article class="references">
+                <p>
+                    The ALSFRS-R is the principal functional endpoint in most ALS drug development programs. Pre-defined total score ranges and baseline ALSFRS-R slopes are commonly applied to reduce heterogeneity of study cohorts. A clear understanding of the methodology, performance characteristics, and limitations of the ALSFRS-R is therefore essential for trial design and for interpreting study outcomes. The growing use of the self-explanatory ALSFRS-R and the increasing availability of remotely collected data support more efficient data capture and may facilitate the digital transformation of ALS trials. As clinical studies increasingly integrate motor phenotypes, biomarkers, and functional trajectories into enrichment strategies, the ALSFRS-R provides the longitudinal anchor that links these variables and contextualizes treatment effects within the overall disease course.
+                </p>
+                <aside>
+                    <h2>
+                        References
+                    </h2>
+                    <p>
+                        (1) Meyer T, Spittel S, Grehl T, Weyen U, Steinbach R, Kettemann D, Petri S, Weydt P, Günther R, Baum P, Schlapakow E, Koch JC, Boentert M, Wolf J, Grosskreutz J, Rödiger A, Ilse B, Metelmann M, Norden J, Koc RY, Körtvélyessy P, Riitano A, Walter B, Hildebrandt B, Schaudinn F, Münch C, Maier A. Remote digital assessment of amyotrophic lateral sclerosis functional rating scale - a multicenter observational study. Amyotroph Lateral Scler Frontotemporal Degener. 2023;24:175-184. doi: 10.1080/21678421.2022.2104649.
+                    </p>
+                    <p>
+                        (2) Maier A, Boentert M, Reilich P, Witzel S, Petri S, Großkreutz J, Metelmann M, Lingor P, Cordts I, Dorst J, Zeller D, Günther R, Hagenacker T, Grehl T, Spittel S, Schuster J, Ludolph A, Meyer T; MND-NET consensus group. ALSFRS-R-SE: an adapted, annotated, and self-explanatory version of the revised amyotrophic lateral sclerosis functional rating scale. Neurol Res Pract. 2022;4:60. doi: 10.1186/s42466-022-00224-6.
+                    </p>
+                    <p>
+                        (3) Steinfurth L, Grehl T, Weyen U, Kettemann D, Steinbach R, Rödiger A, Grosskreutz J, Petri S, Boentert M, Weydt P, Bernsen S, Walter B, GüNTHER R, Lingor P, Koch JC, Baum P, Weishaupt JH, Dorst J, Koc Y, Cordts I, Vidovic M, Norden J, Schumann P, Körtvélyessy P, Spittel S, Münch C, Maier A, Meyer T. Self-assessment of amyotrophic lateral sclerosis functional rating scale on the patient's smartphone proves to be non-inferior to clinic data capture. Amyotroph Lateral Scler Frontotemporal Degener. 2025;26:495-506. doi: 10.1080/21678421.2025.2468404.
+                    </p>
+                </aside>
+            </article>
+        </section>
+
+
+        <section id="als_motor_phenotypes">
+            <h2>
+                ALS Motor Phenotypes – The ALS OPM Classification
+            </h2>
+
+            <article>
+                <p>
+                    In ALS, heterogeneity of motor phenotypes is a fundamental hallmark of the disease and is determined by variability of three anatomical determinants: the region of onset; the spatial and temporal propagation of motor dysfunction from the site of onset to other body regions; and the relative involvement of upper (UMN) and lower (LMN) motor neuron degeneration. Distinct ALS phenotypes were associated with different progression and survival. Given its predictive capacity, clinical phenotyping is of relevance in clinical practice, and research and drug development.
+                </p>
+
+                <p>
+                    Phenotypes of onset differentiate the site of first symptoms including the head, arm, trunk or leg region. First symptoms are defined as impaired motor function including weakness or/and slowed, poorly coordinated voluntary movement, dysarthria, dysphagia, and hypoventilation. The assessment is based on the patient history.
+                </p>
+
+                <figure>
+                    <img src="./assets/figures/ALS OPM 3.3_one slide_20251111_01.png">
+                    <figcaption>
+                        <h2>
+                            ALS OPM classification – «O-axis»
+                        </h2>
+                        <p>
+                            ALS phenotype classification according to the onset at the head (O1), the arm (distal or proximal, O2d/p), the trunk (respiratory or axial onset, O3r, O3a) or the leg (distal or proximal, O4d/p).
+                        </p>
+                    </figcaption>
+                </figure>
+
+                <p>
+                    Phenotypes of propagation differentiate the temporal and spatial pattern in which motor neuron dysfunction spreads from the region of onset to another body region. The assessment is based on the patient history and/or neurological physical examinations in a follow-up of at least 12 months.
+                </p>
+
+                <figure>
+                    <img src="./assets/figures/ALS OPM 3.3_one slide_20251111_02.png">
+                    <figcaption>
+                        <h2>
+                            ALS OPM classification – «P-axis»
+                        <h2>
+                        <p>
+                            ALS phenotype classification according to the propagation of motor symptoms from the region of onset to another, vertically distant body region. P0, no propagation has occurred; P1, propagation has occurred. The status is specified by the number of months (n) from symptom onset to the occurrence of propagation.
+                        </p>
+                    </figcaption>
+                </figure>
+
+                <p>
+                    A neurological examination is performed to assess the symptoms and signs of UMN and/or LMN dysfunction. The evaluation is limited to a physical examination and excludes electrophysiologic, laboratory, and imaging studies. The assessment is based on a neurological examination follow-up.
+                </p>
+
+                <figure>
+                    <img src="./assets/figures/ALS OPM 3.3_one slide_20251111_03.png">
+                    <figcaption>
+                        <h2>
+                            ALS OPM classification – «M-axis»
+                        </h2>
+                        <p>
+                            ALS phenotype classification according to the degree of upper and/or lower motor neuron dysfunction (UMN/LMN). M0, balanced UMN and LMN; M1p, pure UMN dysfunction; M1d, dominant UMN dysfunction; M2p, pure LMN dysfunction; M2d, dominant LMN dysfunction; M3 dissociated upper and lower motor neuron dysfunction	M3. Light blue, UMN dysfunction; dark blue, LMN dysfunction.
+                        </p>
+                    </figcaption>
+                </figure>
+
+                <p>
+                    The ALS OPM classification also maps legacy terms (such as flail arm or flail leg syndrome, progressive muscle atrophy) into a unified framework, allowing for re-classification of historical data without losing continuity. Ultimately, ALS OPM provides a shared language for ALS motor phenotypes, enhancing understanding among clinicians, researchers, statisticians, and regulatory bodies while enabling consistent patient representation and tracking of changes over time across various research settings.
+                </p>
+            </article>
+        </section>
+
+
+        <section class="value-prop-opm">
+            <h3>
+                Value proposition of ALS phenotypes
+            </h3>
+
+            <article class="infocolumns">
+                <div>
+                    <h2>
+                        Eligibility and enrichment
+                    </h2>
+                    <p>
+                        Different ALS phenotypes demonstrate varying rates of progression and survival. ALS OPM enables the exclusion of phenotypes that could dilute treatment effects or distort progression curves, while allowing for the enrichment of the target phenotypes.
+                    </p>
+                </div>
+
+                <div>
+                    <h2>
+                        Integration with biomarkers and digital outcomes
+                    </h2>
+                    <p>
+                        The ALS OPM framework, developed from a comprehensive multicenter ALS program, demonstrates clear links between phenotyping and serum neurofilament light chain (NfL) levels, ALS progression, and survival outcomes. By utilizing the refined ALS OPM phenotypes, sponsors can effectively model the relationship between specific phenotypes and baseline NfL levels, as well as longitudinal NfL dynamics and ALSFRS-R trajectories. This approach allows for improved sample size determination, and endpoint selection.
+                    </p>
+                </div>
+
+                <div>
+                    <h2>
+                        Phenotypic drug targeting
+                    </h2>
+                    <p>
+                        ALS OPM phenotypes allow for an anatomically guided match of the trial population with target structures of the investigational drug. Thus, drugs with targets at the neuromuscular junction, or muscle need to be applied to lower motor neuron (LMN)-dominant phenotypes (M2p > M2d > M0 phenotypes).
+                    </p>
+                </div>
+            </article>
+
+            <article class="references">
+                <p>
+                    By integrating the ALS OPM classification into drug development programs, sponsors can standardize phenotype descriptions across investigators and trial sites, reduce heterogeneity in trial cohorts and link anatomical phenotypes with biomarkers (such as serum NfL or troponin T). Phenotype definitions are increasingly important for interpreting complex or heterogeneous results. In short, ALS OPM transforms clinical phenotypes into a structured, analyzable variable, and may unlock more value from ALS trial datasets.
+                </p>
+                <aside>
+                    <h2>
+                        References
+                    </h2>
+                    <p>
+                        Meyer T, Boentert M, Großkreutz J, Weydt P, Bernsen S, Reilich P, Steinbach R, Rödiger A, Wolf J, Weyen U, Ludolph AC, Weishaupt J, Petri S, Lingor P, Günther R, Löscher W, Weber M, Münch C, Maier A, Grehl T. Motor phenotypes of amyotrophic lateral sclerosis - a three-determinant anatomical classification based on the region of onset, propagation of motor symptoms, and the degree of upper and lower motor neuron dysfunction. Neurol Res Pract. 2025;7:27. doi: 10.1186/s42466-025-00389-w.
+                    </p>
+                </aside>
+            </article>
+        </section>
+
+
+        <section id="neurofilament">
+            <h2>
+                Neurofilament light chain (NfL)
+            </h2>
+
+            <article>
+                <p>
+                    In ALS, clinical symptoms and individual prognosis are highly variable. Neurofilament light chain (NfL) is structural protein of myelinated axons which has emerged as a prognostic biomarker in patient management and clinical research. Specifically, NfL concentrations in CSF and serum are robust indicators of axonal damage in ALS. NfL levels significantly correlate with disease progression as measured by the ALS functional rating scale (ALSFRS-R), and, most importantly, with survival. Furthermore, NfL has been introduced as an endpoint in clinical trials as an early indicator of treatment response.
+                </p>
+
+                <p>
+                    Higher NfL levels are strongly associated with faster disease progression, steeper decline on the ALSFRS-R, and reduced survival. At the same time, long-term survivors often show only moderately elevated levels, making sNfL a powerful marker for distinguishing fast from slow progressors, improving prognostic assessment beyond baseline ALSFRS-R, and helping to explain variability in survival and treatment response.
+                </p>
+
+                <figure>
+                    <img src="./assets/figures/Figure NfL correlated with progression_V1.2_20251120_transparent.png">
+                    <figcaption>
+                        <h2>
+                            Neurofilament light chain (NfL) in correlation to ALS progression (ALS-PR)
+                        </h2>
+                        <p>
+                            Serum concentration of NfL is more elevated in patients with faster progressing ALS compared to slower ALS progression. Slow (<0,5 ALSFRS-R/month), intermediate (0,5-1,0) and fast (> 1,0). ALS-PR, ALS progression defined as monthly change of the ALS functional rating scale (ALSFRS-R). Figure, courtesy of the authors of reference (2).
+                        </p>
+                    </figcaption>
+                </figure>
+
+                <p>
+                    The use of NfL as a stratification criterion in clinical trials or response marker for disease modifying drugs is of major interest. The robust association between ALS progression and sNfL supports the concept that NfL is an additional criterion for inclusion or stratification in clinical trials. Thus, sNfL, in addition to the pre-study slope of ALSFRS-R, could help to better define study groups at baseline. The results of this study reinforce the use of sNfL as an important endpoint in clinical trials, at least for drugs that aim to reduce neuroaxonal degeneration and go beyond symptomatic therapy.
+                </p>
+
+                <figure>
+                    <img src="./assets/figures/Figure_Neurofilamant as response marker_20251120.png">
+                    <figcaption>
+                        <h2>
+                            Neurofilament light chain (NfL) as treatment response marker in ALS.
+                        <h2>
+                        <p>
+                            Serum concentration of NfL before (“running in”) and during treatment (“observation”) serve as treatment response marker. In this example, patient #1 and #2 show different levels of NfL elevation at baseline, and NfL reductions during treatment with an investigational drug.
+                        </p>
+                    </figcaption>
+                </figure>
+            </article>
+        </section>
+
+
+        <section class="value-prop-nfl">
+            <h3>
+                Value proposition of NfL
+            </h3>
+
+            <article class="infocolumns">
+                <div>
+                    <h2>
+                        Trial enrichment and stratification
+                    </h2>
+                    <p>
+                        Baseline NfL can be used to define prognostic strata, for example, distinguishing faster from slower ALS progression, which reduces noise from clinical heterogeneity.
+                    </p>
+                </div>
+
+                <div>
+                    <h2>
+                        Treatment response
+                    </h2>
+                    <p>
+                        As a pharmacodynamic endpoint, treatment-induced reductions or stabilisation of NfL can serve as early signals of slowed neurodegeneration, emerging well before survival curves or ALSFRS-R trajectories begin to diverge.
+                    </p>
+                </div>
+
+                <div>
+                    <h2>
+                        Mechanistic insights
+                    </h2>
+                    <p>
+                        Because sNfL can reflect the extent of neuronal injury, this biomarker can help to prioritise compounds or combinations that produce the strongest and most consistent NfL signal in ALS.
+                    </p>
+                </div>
+            </article>
+
+            <article class="references">
+                <p>
+                    By integrating NfL into drug development programs, sponsors can reduce heterogeneity in trial cohorts. NfL can be embedded within a structured framework that combines NfL levels with ALSFRS-R slopes and ALS motor phenotypes. This biomarker can be used to enrich study populations or to stratify participants in clinical trials. In short, NfL can increase trial efficiency and has the potential to demonstrate early and robust signals of treatment response in ALS.
+                </p>
+                <aside>
+                    <h2>
+                        References
+                    </h2>
+                    <p>
+                        (1) Meyer T, Dreger M, Grehl T, Weyen U, Kettemann D, Weydt P, Günther R, Lingor P, Petri S, Koch JC, Großkreutz J, Rödiger A, Baum P, Hermann A, Prudlo J, Boentert M, Weishaupt JH, Löscher WN, Dorst J, Koc Y, Bernsen S, Cordts I, Vidovic M, Steinbach R, Metelmann M, Kleinveld VE, Norden J, Ludolph A, Walter B, Schumann P, Münch C, Körtvélyessy P, Maier A. Serum neurofilament light chain in distinct phenotypes of amyotrophic lateral sclerosis: A longitudinal, multicenter study. Eur J Neurol. 2024;31:e16379. doi: 10.1111/ene.16379.
+                    </p>
+                    <p>
+                        (2) Meyer T, Salkic E, Grehl T, Weyen U, Kettemann D, Weydt P, Günther R, Lingor P, Koch JC, Petri S, Hermann A, Prudlo J, Großkreutz J, Baum P, Boentert M, Metelmann M, Norden J, Cordts I, Weishaupt JH, Dorst J, Ludolph A, Koc Y, Walter B, Münch C, Spittel S, Dreger M, Maier A, Körtvélyessy P. Performance of serum neurofilament light chain in a wide spectrum of clinical courses of amyotrophic lateral sclerosis-a cross-sectional multicenter study. Eur J Neurol. 2023;30:1600-1610. doi: 10.1111/ene.15773.
+                    </p>
+                </aside>
+            </article>
+        </section>
+
+
+        <div class="footer">
+            <ul>
+                <li>APST Research GmbH</li>
+                <li>Westhafenstraße 1</li>
+                <li>13353 Berlin, Germany</li>
+            </ul>
+            <ul>
+                <li>Contact:</li>
+                <li>info@apstresearch.com</li>
+                <li>+49 30 81031410</li>
+            </ul>
+            <ul>
+                <li><a href="./legal-information.html">Legal information</a></li>
+                <li><a href="./assets/APST-R_Data privacy (English)_clean_V.2.12_20251124.pdf" download>Data Privacy</a></li>
+                <li><a href="./gtc.html">GTC</a></li>
+            </ul>
+            <ul>
+                <li>© 2025 APST Research GmbH</li>
+                <li>All rights reserved</li>
+                <li>Design by <a href="https://rwnt.de/">RWNT</a></li>
+            </ul>
+        </div>
+    </body>
 </html>
