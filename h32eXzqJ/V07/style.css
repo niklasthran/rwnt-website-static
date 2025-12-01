@@ -524,6 +524,10 @@ article.infocolumns div {
 		column-gap: 0;
 	}
 
+	body.no-scroll {
+		overflow: hidden;
+	}
+
 	/*------------------------------*/
 	/* Global spacing */
 	section,
@@ -618,6 +622,7 @@ article.infocolumns div {
 		display: none;
 		flex-direction: column;
 		background-color:  #F2F3F4;
+		height: 100vh;
 		height: 100vh;
 		padding: 32px 24px 32px 24px;
 	}
