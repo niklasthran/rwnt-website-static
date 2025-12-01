@@ -220,7 +220,6 @@ article.references aside p {
 	margin: 0 0 1em 0;
 }
 
-section article figure,
 section article.infocolumns,
 section article.references {
 	margin: 0 0 5em 0;
@@ -232,6 +231,10 @@ section article p {
 
 article.references aside ul {
 	padding: 0 0 0 0.85em;
+}
+
+section article figure {
+	margin: 4em 0 5em 0;
 }
 
 /*-----------------------------------------*/
@@ -500,7 +503,8 @@ article.infocolumns div {
 
 	.header,
 	section,
-	.dataviz-dash {
+	.dataviz-dash,
+	.dataviz-article {
 		padding-right: calc((100vw - 1280px) / 2);
 		padding-left: calc((100vw - 1280px) / 2);
 	}
@@ -553,12 +557,15 @@ article.infocolumns div {
 
 	article.dataviz-article p,
 	section article figure img,
-	section article figure,
 	section article.infocolumns,
 	article.references aside p,
 	section article.references,
 	.nav-mobile a {
 		margin: 0 0 0.75em 0;
+	}
+
+	section article figure {
+		margin: 4em 0 2em 0;
 	}
 
 	section article p {
