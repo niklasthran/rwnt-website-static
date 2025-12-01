@@ -81,6 +81,7 @@ article.references p {
 
 small,
 article.references aside p,
+article.references aside ul,
 .nav-desktop,
 .footer {
 	font-family: Inter-Medium;
@@ -227,6 +228,10 @@ section article.references {
 
 section article p {
 	margin: 0 0 3em 0;
+}
+
+article.references aside ul {
+	padding: 0 0 0 0.85em;
 }
 
 /*-----------------------------------------*/
@@ -472,7 +477,7 @@ article figure img {
 }
 
 article figure figcaption {
-	grid-column: 8 / span 12;
+	grid-column: 8 / span 4;
 }
 
 
@@ -558,6 +563,10 @@ article.infocolumns div {
 
 	section article p {
 		margin: 0 0 2em 0;
+	}
+
+	article.references aside ul {
+		padding: 0 0 0 0.9em;
 	}
 
 	/*------------------------------*/
@@ -799,6 +808,7 @@ article.infocolumns div {
 
 	small,
 	article.references aside p,
+	article.references aside ul,
 	article.references aside h2,
 	figure p {
 		font-size: 11px;
