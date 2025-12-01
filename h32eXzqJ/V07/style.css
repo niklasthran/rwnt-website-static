@@ -117,18 +117,6 @@ article.references aside h2 {
 	animation-delay: 0.1s;
 }
 
-.nav-mobile {
-	opacity: 0;
-	animation: fadeIn 0.6s ease forwards;
-	animation-delay: 0.0s;
-}
-
-.nav-mobile a {
-	opacity: 0;
-	animation: fadeIn 0.6s ease forwards;
-	animation-delay: 0.2s;
-}
-
 #dataviz-loader {
 	opacity: 0;
 	animation: fadeIn 0.6s ease forwards;
@@ -181,8 +169,8 @@ section {
 	animation: grow 2.0s ease infinite;
 	animation-delay: 1.0s;
 }
-
 /*-----------------------------------------*/
+
 /* Global */
 html {
 	width: 100%;
@@ -211,9 +199,12 @@ article.infocolumns {
 }
 
 section,
-.dataviz-dash,
-.dataviz-article {
+.dataviz-dash {
 	padding: 41px 76px 41px 76px;
+}
+
+.dataviz-article {
+	padding: 0 76px 41px 76px;
 }
 
 
@@ -536,9 +527,12 @@ article.infocolumns div {
 	/*------------------------------*/
 	/* Global spacing */
 	section,
-	.dataviz-dash,
-	.dataviz-article {
+	.dataviz-dash {
 		padding: 35px 24px 35px 24px;
+	}
+
+	.dataviz-article {
+		padding: 0 24px 35px 24px;
 	}
 
 	article.dataviz-article h2,
@@ -552,7 +546,8 @@ article.infocolumns div {
 	section article figure,
 	section article.infocolumns,
 	article.references aside p,
-	section article.references {
+	section article.references,
+	.nav-mobile a {
 		margin: 0 0 0.75em 0;
 	}
 
@@ -623,7 +618,7 @@ article.infocolumns div {
 		display: none;
 		flex-direction: column;
 		background-color:  #F2F3F4;
-		height: calc(100vh - 72px);
+		height: 100vh;
 		padding: 32px 24px 32px 24px;
 	}
 
@@ -658,7 +653,8 @@ article.infocolumns div {
 	}
 
 	.dataviz {
-		height: calc(100vh - 420px);
+		height: 300px;
+		
 	}
 
 	/* DV Loader position */
