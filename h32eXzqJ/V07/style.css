@@ -471,10 +471,6 @@ article.dataviz-article {
 }
 
 /* Article */
-section article p {
-	max-width: 80%;
-}
-
 article figure {
 	margin: 0;
 }
