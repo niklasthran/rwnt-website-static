@@ -245,7 +245,8 @@ section article p {
 	align-content: center;
 }
 
-.logo {
+.logo,
+.logo a {
 	grid-column: 1 / span 3;
 	display: inherit;
 	align-items: center;
