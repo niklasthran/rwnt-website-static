@@ -6,7 +6,7 @@ import GSAP from "gsap";
 ////////////////////////////
 /* Loading ALS Data Repository from JSON file */
 
-const ALS_DATA_FILE = await fetch("../assets/data_mini.json");
+const ALS_DATA_FILE = await fetch("./assets/data_mini.json");
 const ALS_DATA = await ALS_DATA_FILE.json();
 ////////////////////////////
 
